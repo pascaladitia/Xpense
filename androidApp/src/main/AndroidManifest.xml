@@ -11,7 +11,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="AniQu"
+        android:label="ExpenseTracker"
         android:theme="@android:style/Theme.Material.NoActionBar">
         <activity
             android:name=".AppActivity"

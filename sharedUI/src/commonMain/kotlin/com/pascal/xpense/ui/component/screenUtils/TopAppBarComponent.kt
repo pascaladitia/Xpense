@@ -23,7 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.pascal.xpense.ui.theme.Blue500
+import androidx.compose.ui.graphics.Color
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -86,7 +86,7 @@ fun TopAppBarComponent(
                         modifier = Modifier.padding(start = 8.dp),
                         text = title,
                         style = MaterialTheme.typography.titleLarge,
-                        color = Blue500
+                        color = Color(0xFF1D3557)
                     )
                 }
             }

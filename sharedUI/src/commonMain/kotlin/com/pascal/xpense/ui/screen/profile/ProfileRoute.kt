@@ -1,74 +1,69 @@
 package com.pascal.xpense.ui.screen.profile
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.pascal.xpense.ui.component.dialog.ShowDialog
-import com.pascal.xpense.ui.component.screenUtils.LoadingScreen
-import com.pascal.xpense.ui.screen.profile.component.ProfileThemeBottom
-import com.pascal.xpense.ui.screen.profile.state.LocalProfileEvent
-import com.pascal.xpense.ui.screen.profile.state.ProfileUIState
-import com.pascal.xpense.ui.theme.AppTheme
-import org.jetbrains.compose.resources.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.pascal.xpense.ui.theme.AppTheme
 import org.koin.compose.koinInject
-import xpense.sharedui.generated.resources.Res
-import xpense.sharedui.generated.resources.close
 
 @Composable
 fun ProfileRoute(
     viewModel: ProfileViewModel = koinInject<ProfileViewModel>(),
     onBookMark: () -> Unit
 ) {
-    val event = LocalProfileEvent.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var showThemeSheet by rememberSaveable { mutableStateOf(false) }
 
-    if (showThemeSheet) {
-        ProfileThemeBottom(
-            initialSelection = uiState.themeMode,
-            onApply = { selection ->
-                showThemeSheet = false
-                viewModel.onThemeChanged(selection)
-            },
-            onDismiss = {
-                showThemeSheet = false
-            }
-        )
-    }
-
-    if (uiState.isLoading) LoadingScreen()
-
-    if (uiState.error.first) {
-        ShowDialog(
-            message = uiState.error.second,
-            textButton = stringResource(Res.string.close)
-        ) {
-            viewModel.resetError()
-        }
-    }
-
-    CompositionLocalProvider(
-        LocalProfileEvent provides event.copy(
-            onBookmark = onBookMark,
-            onTheme = { showThemeSheet = true }
-        )
-    ) {
-        ProfileContent(uiState = uiState)
-    }
+    ProfileContent()
 }
 
 @Composable
 fun ProfileContent(
-    modifier: Modifier = Modifier,
-    uiState: ProfileUIState = ProfileUIState()
+    modifier: Modifier = Modifier
 ) {
-
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Person,
+            contentDescription = null,
+            modifier = Modifier.size(80.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "ExpenseTracker",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Personal Finance Manager",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
 }
 
 @Preview(showBackground = true)

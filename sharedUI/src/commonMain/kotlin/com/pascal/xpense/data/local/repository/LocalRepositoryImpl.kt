@@ -1,8 +1,9 @@
 package com.pascal.xpense.data.local.repository
 
 import com.pascal.xpense.data.local.database.AppDatabase
-import com.pascal.xpense.data.local.entity.FavoritesEntity
-import com.pascal.xpense.data.local.entity.ProfileEntity
+import com.pascal.xpense.data.local.entity.CategoryTotal
+import com.pascal.xpense.data.local.entity.TransactionEntity
+import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Single
 
 @Single
@@ -10,41 +11,37 @@ class LocalRepositoryImpl(
     private val database: AppDatabase,
 ) : LocalRepository {
 
-    // Profile
-    override suspend fun getProfileById(id: Long): ProfileEntity? {
-        return database.profileDao().getProfileById(id)
+    private val dao get() = database.transactionDao()
+
+    override suspend fun addTransaction(transaction: TransactionEntity): Long {
+        return dao.insert(transaction)
     }
 
-    override suspend fun getAllProfiles(): List<ProfileEntity> {
-        return database.profileDao().getAllProfiles()
+    override suspend fun removeTransaction(transaction: TransactionEntity) {
+        dao.delete(transaction)
     }
 
-    override suspend fun deleteProfileById(item: ProfileEntity) {
-        return database.profileDao().deleteProfile(item)
+    override fun observeAllTransactions(): Flow<List<TransactionEntity>> {
+        return dao.observeAll()
     }
 
-    override suspend fun insertProfile(item: ProfileEntity) {
-        return database.profileDao().insertProfile(item)
+    override suspend fun getTransactionById(id: Long): TransactionEntity? {
+        return dao.getById(id)
     }
 
-    // Favorites
-    override suspend fun insertFavorite(entity: FavoritesEntity) {
-        database.favoritesDao().insertFavorite(entity)
+    override fun observeTotalExpense(): Flow<Double> {
+        return dao.observeTotalExpense()
     }
 
-    override suspend fun deleteFavorite(entity: FavoritesEntity) {
-        database.favoritesDao().deleteFavorite(entity)
+    override fun observeTransactionsByMonth(yearMonth: String): Flow<List<TransactionEntity>> {
+        return dao.observeByMonth(yearMonth)
     }
 
-    override suspend fun getFavorite(): List<FavoritesEntity>? {
-        return database.favoritesDao().getFavoriteMovieList()
+    override fun observeMonthlyExpense(yearMonth: String): Flow<Double> {
+        return dao.observeMonthlyExpense(yearMonth)
     }
 
-    override suspend fun getFavorite(title: String): Boolean {
-        return database.favoritesDao().getFavorite(title) != null
-    }
-
-    override suspend fun clearFavorite() {
-        return database.favoritesDao().clearFavoritesTable()
+    override fun observeExpenseByCategory(): Flow<List<CategoryTotal>> {
+        return dao.observeExpenseByCategory()
     }
 }

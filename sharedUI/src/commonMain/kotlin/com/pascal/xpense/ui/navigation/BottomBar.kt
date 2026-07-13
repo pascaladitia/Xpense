@@ -4,16 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.automirrored.outlined.MenuBook
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.filled.AccountBalanceWallet
+import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.AccountBalanceWallet
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -49,25 +47,19 @@ fun BottomBar(
                     title = "Home",
                     iconFilled = Icons.Filled.Home,
                     iconOutlined = Icons.Outlined.Home,
-                    screen = Screen.HomeScreen
+                    screen = Screen.DashboardScreen
                 ),
                 NavigationItem(
-                    title = "Manga",
-                    iconFilled = Icons.AutoMirrored.Filled.MenuBook,
-                    iconOutlined = Icons.AutoMirrored.Outlined.MenuBook,
-                    screen = Screen.MangaScreen
+                    title = "Analytics",
+                    iconFilled = Icons.Filled.BarChart,
+                    iconOutlined = Icons.Outlined.BarChart,
+                    screen = Screen.AnalyticsScreen
                 ),
                 NavigationItem(
-                    title = "Search",
-                    iconFilled = Icons.Filled.Search,
-                    iconOutlined = Icons.Outlined.Search,
-                    screen = Screen.SearchScreen
-                ),
-                NavigationItem(
-                    title = "Favorite",
-                    iconFilled = Icons.Filled.Favorite,
-                    iconOutlined = Icons.Outlined.Favorite,
-                    screen = Screen.FavoriteScreen
+                    title = "Budget",
+                    iconFilled = Icons.Filled.AccountBalanceWallet,
+                    iconOutlined = Icons.Outlined.AccountBalanceWallet,
+                    screen = Screen.BudgetScreen
                 ),
                 NavigationItem(
                     title = "Profile",
@@ -81,28 +73,26 @@ fun BottomBar(
                 val selected = currentRoute == item.screen.route
                 NavigationBarItem(
                     icon = {
-                        val iconSize = if (selected) 26.dp else 24.dp
                         Icon(
                             imageVector = if (selected) item.iconFilled else item.iconOutlined,
                             contentDescription = item.title,
-                            modifier = Modifier.size(iconSize),
-                            tint = if (selected) MaterialTheme.colorScheme.onSurface else Color.Gray
+                            modifier = Modifier.size(24.dp),
+                            tint = if (selected) MaterialTheme.colorScheme.primary else Color.Gray
                         )
                     },
                     label = {
                         Text(
                             text = item.title,
-                            style = MaterialTheme.typography.titleSmall.copy(
+                            style = MaterialTheme.typography.labelSmall.copy(
                                 fontSize = 10.sp
                             ),
-                            color = if (selected) MaterialTheme.colorScheme.onSurface else Color.Gray
+                            color = if (selected) MaterialTheme.colorScheme.primary else Color.Gray
                         )
                     },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MaterialTheme.colorScheme.onSurface,
-                        indicatorColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                     ),
-                    alwaysShowLabel = false,
                     selected = selected,
                     onClick = {
                         navController.navigate(item.screen.route) {

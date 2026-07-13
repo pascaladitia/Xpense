@@ -1,18 +1,24 @@
 package com.pascal.xpense.data.local.repository
 
-import com.pascal.xpense.data.local.entity.FavoritesEntity
-import com.pascal.xpense.data.local.entity.ProfileEntity
-
+import com.pascal.xpense.data.local.entity.CategoryTotal
+import com.pascal.xpense.data.local.entity.TransactionEntity
+import kotlinx.coroutines.flow.Flow
 
 interface LocalRepository {
-    suspend fun getProfileById(id: Long): ProfileEntity?
-    suspend fun getAllProfiles(): List<ProfileEntity>
-    suspend fun deleteProfileById(item: ProfileEntity)
-    suspend fun insertProfile(item: ProfileEntity)
 
-    suspend fun insertFavorite(entity: FavoritesEntity)
-    suspend fun deleteFavorite(entity: FavoritesEntity)
-    suspend fun getFavorite(): List<FavoritesEntity>?
-    suspend fun getFavorite(title: String): Boolean
-    suspend fun clearFavorite()
+    suspend fun addTransaction(transaction: TransactionEntity): Long
+
+    suspend fun removeTransaction(transaction: TransactionEntity)
+
+    fun observeAllTransactions(): Flow<List<TransactionEntity>>
+
+    suspend fun getTransactionById(id: Long): TransactionEntity?
+
+    fun observeTotalExpense(): Flow<Double>
+
+    fun observeTransactionsByMonth(yearMonth: String): Flow<List<TransactionEntity>>
+
+    fun observeMonthlyExpense(yearMonth: String): Flow<Double>
+
+    fun observeExpenseByCategory(): Flow<List<CategoryTotal>>
 }

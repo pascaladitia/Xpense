@@ -30,3 +30,5 @@ actual fun actionShareUrl(url: String?) {
         }
     }
 }
+
+actual fun currentTimeMillis(): Long = System.currentTimeMillis()

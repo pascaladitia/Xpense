@@ -6,10 +6,8 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
-import com.pascal.xpense.data.local.dao.FavoritesDao
-import com.pascal.xpense.data.local.dao.ProfileDao
-import com.pascal.xpense.data.local.entity.FavoritesEntity
-import com.pascal.xpense.data.local.entity.ProfileEntity
+import com.pascal.xpense.data.local.dao.TransactionDao
+import com.pascal.xpense.data.local.entity.TransactionEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
@@ -17,13 +15,11 @@ import kotlinx.coroutines.IO
 @ConstructedBy(AppDatabaseConstructor::class)
 @Database(
     entities = [
-        ProfileEntity::class,
-        FavoritesEntity::class
-    ], version = 1
+        TransactionEntity::class
+    ], version = 3
 )
 abstract class AppDatabase : RoomDatabase(), DB {
-    abstract fun profileDao(): ProfileDao
-    abstract fun favoritesDao(): FavoritesDao
+    abstract fun transactionDao(): TransactionDao
     override fun clearAllTables(): Unit {}
 }
 
@@ -42,5 +38,6 @@ fun getRoomDatabase(
     return builder
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
+        .fallbackToDestructiveMigration(dropAllTables = true)
         .build()
 }

@@ -1,6 +1,9 @@
 package com.pascal.xpense.utils
 
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.Foundation.NSDate
 import platform.Foundation.NSOperationQueue
+import platform.Foundation.timeIntervalSince1970
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIAlertAction
 import platform.UIKit.UIAlertActionStyleDefault
@@ -43,4 +46,9 @@ actual fun actionShareUrl(url: String?) {
     NSOperationQueue.mainQueue.addOperationWithBlock {
         rootVC.presentViewController(activityVC, animated = true, completion = null)
     }
+}
+
+@OptIn(ExperimentalForeignApi::class)
+actual fun currentTimeMillis(): Long {
+    return (NSDate().timeIntervalSince1970 * 1000).toLong()
 }
