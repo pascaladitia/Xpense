@@ -44,7 +44,7 @@ fun BottomBar(
 
             val navigationItems = listOf(
                 NavigationItem(
-                    title = "Home",
+                    title = "Dashboard",
                     iconFilled = Icons.Filled.Home,
                     iconOutlined = Icons.Outlined.Home,
                     screen = Screen.DashboardScreen

@@ -29,10 +29,14 @@ class DashboardViewModel(
 
             combine(
                 localUseCase.getAllTransactions(),
+                localUseCase.observeTotalIncome(),
                 localUseCase.observeTotalExpense()
-            ) { transactions, expense ->
+            ) { transactions, income, expense ->
+                val balance = income - expense
                 DashboardUIState(
                     isLoading = false,
+                    totalBalance = balance,
+                    totalIncome = income,
                     totalExpense = expense,
                     transactions = transactions,
                     groupedTransactions = transactions.groupBy { it.date }

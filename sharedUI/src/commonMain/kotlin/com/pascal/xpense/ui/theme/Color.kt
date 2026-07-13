@@ -3,7 +3,7 @@ package com.pascal.xpense.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val DeepNavy = Color(0xFF0F172A)
-val SoftGray = Color(0xFFF7F9FB)
+val SoftGray = Color(0xFFECEEF0)
 val PureWhite = Color(0xFFFFFFFF)
 val LightOutline = Color(0xFFE2E8F0)
 

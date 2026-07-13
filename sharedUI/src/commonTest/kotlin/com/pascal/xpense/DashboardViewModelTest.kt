@@ -41,23 +41,24 @@ class DashboardViewModelTest {
 
         val state = viewModel.uiState.value
         assertEquals(false, state.isLoading)
+        assertEquals(0.0, state.totalBalance)
+        assertEquals(0.0, state.totalIncome)
         assertEquals(0.0, state.totalExpense)
         assertEquals(emptyList(), state.transactions)
     }
 
     @Test
-    fun expenseCalculation() = runTest {
+    fun balanceCalculation() = runTest {
         val repo = FakeLocalRepository()
         val useCase = LocalUseCaseImpl(repo)
         val viewModel = DashboardViewModel(useCase)
 
         repo.addTx(
             TransactionEntity(
-                title = "Groceries",
-                amount = 50.0,
-                category = "Food",
+                title = "Salary",
+                amount = 3000.0,
                 date = "2024-01-15",
-                type = TransactionEntity.TYPE_EXPENSE
+                type = TransactionEntity.TYPE_INCOME
             )
         )
 
@@ -65,7 +66,6 @@ class DashboardViewModelTest {
             TransactionEntity(
                 title = "Rent",
                 amount = 1000.0,
-                category = "Housing",
                 date = "2024-01-15",
                 type = TransactionEntity.TYPE_EXPENSE
             )
@@ -74,7 +74,9 @@ class DashboardViewModelTest {
         viewModel.refresh()
 
         val state = viewModel.uiState.value
-        assertEquals(1050.0, state.totalExpense)
+        assertEquals(2000.0, state.totalBalance)
+        assertEquals(3000.0, state.totalIncome)
+        assertEquals(1000.0, state.totalExpense)
         assertEquals(2, state.transactions.size)
     }
 
@@ -88,7 +90,6 @@ class DashboardViewModelTest {
             TransactionEntity(
                 title = "Coffee",
                 amount = 5.0,
-                category = "Food",
                 date = "2024-01-15",
                 type = TransactionEntity.TYPE_EXPENSE
             )
@@ -98,7 +99,6 @@ class DashboardViewModelTest {
             TransactionEntity(
                 title = "Groceries",
                 amount = 50.0,
-                category = "Food",
                 date = "2024-01-14",
                 type = TransactionEntity.TYPE_EXPENSE
             )
@@ -122,7 +122,6 @@ class DashboardViewModelTest {
             TransactionEntity(
                 title = "Test",
                 amount = 10.0,
-                category = "Other",
                 date = "2024-01-15",
                 type = TransactionEntity.TYPE_EXPENSE
             )
@@ -140,6 +139,7 @@ class FakeLocalRepository : LocalRepository {
     private val transactions = mutableListOf<TransactionEntity>()
     private var nextId = 1L
     private val _transactionsFlow = MutableStateFlow<List<TransactionEntity>>(emptyList())
+    private val incomeFlow = MutableStateFlow(0.0)
     private val expenseFlow = MutableStateFlow(0.0)
 
     fun addTx(entity: TransactionEntity): Long {
@@ -152,7 +152,8 @@ class FakeLocalRepository : LocalRepository {
 
     private fun refreshFlows() {
         _transactionsFlow.value = transactions.toList()
-        expenseFlow.value = transactions.sumOf { it.amount }
+        incomeFlow.value = transactions.filter { it.type == TransactionEntity.TYPE_INCOME }.sumOf { it.amount }
+        expenseFlow.value = transactions.filter { it.type == TransactionEntity.TYPE_EXPENSE }.sumOf { it.amount }
     }
 
     override suspend fun addTransaction(transaction: TransactionEntity): Long {
@@ -168,6 +169,8 @@ class FakeLocalRepository : LocalRepository {
 
     override suspend fun getTransactionById(id: Long) = transactions.find { it.id == id }
 
+    override fun observeTotalIncome() = incomeFlow
+
     override fun observeTotalExpense() = expenseFlow
 
     override fun observeTransactionsByMonth(yearMonth: String) = flowOf(
@@ -175,11 +178,13 @@ class FakeLocalRepository : LocalRepository {
     )
 
     override fun observeMonthlyExpense(yearMonth: String) = flowOf(
-        transactions.filter { it.date.startsWith(yearMonth) }.sumOf { it.amount }
+        transactions.filter { it.date.startsWith(yearMonth) && it.type == TransactionEntity.TYPE_EXPENSE }
+            .sumOf { it.amount }
     )
 
     override fun observeExpenseByCategory() = flowOf(
-        transactions.groupBy { it.category }
+        transactions.filter { it.type == TransactionEntity.TYPE_EXPENSE }
+            .groupBy { it.category }
             .map { (category, items) -> CategoryTotal(category, items.sumOf { it.amount }) }
     )
 }

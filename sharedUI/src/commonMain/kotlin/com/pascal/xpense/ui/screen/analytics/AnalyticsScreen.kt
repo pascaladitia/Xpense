@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.domain.model.CategoryBreakdown
+import com.pascal.xpense.ui.component.screenUtils.TopAppBarComponent
 import com.pascal.xpense.ui.screen.analytics.state.AnalyticsUIState
 import com.pascal.xpense.ui.theme.AppTheme
 import com.pascal.xpense.ui.theme.DeepNavy
@@ -47,6 +49,7 @@ fun AnalyticsScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
+            .statusBarsPadding()
     ) {
         Spacer(modifier = Modifier.height(8.dp))
 

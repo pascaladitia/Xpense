@@ -18,15 +18,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import xpense.sharedui.generated.resources.Res
 import xpense.sharedui.generated.resources.logo
 
@@ -45,7 +46,8 @@ fun TopAppBarComponent(
     onRightIcon2Click: (() -> Unit)? = null,
     onRightIcon3Click: (() -> Unit)? = null,
     logoRes: DrawableResource? = null,
-    title: String? = null
+    title: String? = null,
+    color: Color = MaterialTheme.colorScheme.primary
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
@@ -67,7 +69,7 @@ fun TopAppBarComponent(
                         Icon(
                             imageVector = it,
                             contentDescription = "Left Icon 1",
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = color
                         )
                     }
                 }
@@ -76,7 +78,7 @@ fun TopAppBarComponent(
                         Icon(
                             imageVector = it,
                             contentDescription = "Left Icon 2",
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = color
                         )
                     }
                 }
@@ -86,7 +88,7 @@ fun TopAppBarComponent(
                         modifier = Modifier.padding(start = 8.dp),
                         text = title,
                         style = MaterialTheme.typography.titleLarge,
-                        color = Color(0xFF1D3557)
+                        color = color
                     )
                 }
             }
@@ -98,7 +100,7 @@ fun TopAppBarComponent(
                         Icon(
                             imageVector = it,
                             contentDescription = "Right Icon 1",
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = color
                         )
                     }
                 }
@@ -107,7 +109,7 @@ fun TopAppBarComponent(
                         Icon(
                             imageVector = it,
                             contentDescription = "Right Icon 2",
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = color
                         )
                     }
                 }
@@ -116,17 +118,14 @@ fun TopAppBarComponent(
                         Icon(
                             imageVector = it,
                             contentDescription = "Right Icon 3",
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = color
                         )
                     }
                 }
             }
         },
-        colors = androidx.compose.material3.TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            titleContentColor = MaterialTheme.colorScheme.onBackground,
-            navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
-            actionIconContentColor = MaterialTheme.colorScheme.onBackground
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent
         )
     )
 }
@@ -152,7 +151,7 @@ fun TopAppBarComponentTextPreview() {
         rightIcon2 = Icons.AutoMirrored.Filled.VolumeUp,
         rightIcon3 = Icons.Default.MoreVert,
         logoRes = null,
-        title = "Berita Hari Ini"
+        title = "Title"
     )
 }
 

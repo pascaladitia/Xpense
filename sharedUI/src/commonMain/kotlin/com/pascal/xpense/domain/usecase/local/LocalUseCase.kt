@@ -12,6 +12,8 @@ interface LocalUseCase {
 
     fun getAllTransactions(): Flow<List<TransactionEntity>>
 
+    fun observeTotalIncome(): Flow<Double>
+
     fun observeTotalExpense(): Flow<Double>
 
     fun observeTransactionsByMonth(yearMonth: String): Flow<List<TransactionEntity>>

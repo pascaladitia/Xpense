@@ -29,6 +29,10 @@ class LocalRepositoryImpl(
         return dao.getById(id)
     }
 
+    override fun observeTotalIncome(): Flow<Double> {
+        return dao.observeTotalIncome()
+    }
+
     override fun observeTotalExpense(): Flow<Double> {
         return dao.observeTotalExpense()
     }

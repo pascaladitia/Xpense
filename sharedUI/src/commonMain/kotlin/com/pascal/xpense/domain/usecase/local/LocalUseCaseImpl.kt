@@ -24,6 +24,10 @@ class LocalUseCaseImpl(
         return repository.observeAllTransactions()
     }
 
+    override fun observeTotalIncome(): Flow<Double> {
+        return repository.observeTotalIncome()
+    }
+
     override fun observeTotalExpense(): Flow<Double> {
         return repository.observeTotalExpense()
     }

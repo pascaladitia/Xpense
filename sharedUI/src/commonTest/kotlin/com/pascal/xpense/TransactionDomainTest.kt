@@ -13,32 +13,21 @@ class TransactionDomainTest {
         val entity = TransactionEntity(
             title = "Groceries",
             amount = 50.0,
-            category = "Food",
-            date = "2024-01-15",
-            type = "EXPENSE",
-            note = "Weekly groceries"
-        )
-
-        assertEquals("Groceries", entity.title)
-        assertEquals(50.0, entity.amount)
-        assertEquals("Food", entity.category)
-        assertEquals("2024-01-15", entity.date)
-        assertEquals("EXPENSE", entity.type)
-        assertEquals("Weekly groceries", entity.note)
-        assertTrue(entity.id >= 0)
-    }
-
-    @Test
-    fun entityTypeExpense() {
-        val expense = TransactionEntity(
-            title = "Coffee",
-            amount = 5.0,
-            category = "Food",
             date = "2024-01-15",
             type = "EXPENSE"
         )
 
-        assertEquals("EXPENSE", expense.type)
+        assertEquals("Groceries", entity.title)
+        assertEquals(50.0, entity.amount)
+        assertEquals("2024-01-15", entity.date)
+        assertEquals("EXPENSE", entity.type)
+        assertTrue(entity.id >= 0)
+    }
+
+    @Test
+    fun entityTypeConstants() {
+        assertEquals("INCOME", TransactionEntity.TYPE_INCOME)
+        assertEquals("EXPENSE", TransactionEntity.TYPE_EXPENSE)
     }
 
     @Test
@@ -46,7 +35,6 @@ class TransactionDomainTest {
         val entity = TransactionEntity(
             title = "Test",
             amount = 99.99,
-            category = "Other",
             date = "2024-01-15",
             type = "EXPENSE"
         )
@@ -59,13 +47,12 @@ class TransactionDomainTest {
         val entity = TransactionEntity(
             title = "Minimal",
             amount = 10.0,
-            category = "Other",
             date = "2024-01-15",
             type = "EXPENSE"
         )
         assertNotNull(entity)
         assertEquals(0, entity.id)
-        assertEquals(null, entity.note)
+        assertEquals("General", entity.category)
         assertEquals(null, entity.attachmentPath)
     }
 }

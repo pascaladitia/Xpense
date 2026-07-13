@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,10 +25,17 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.Computer
+import androidx.compose.material.icons.filled.DirectionsCar
+import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.Receipt
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,31 +43,36 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pascal.xpense.ui.component.screenUtils.TopAppBarComponent
 import com.pascal.xpense.ui.screen.addtransaction.state.AddTransactionUIState
+import com.pascal.xpense.ui.screen.addtransaction.state.LocalAddTransactionEvent
 import com.pascal.xpense.ui.theme.CoralExpense
 import com.pascal.xpense.ui.theme.DeepNavy
+import com.pascal.xpense.ui.theme.GreenIncome
 
 @Composable
 fun AddTransactionScreen(
-    uiState: AddTransactionUIState,
-    onTitleChange: (String) -> Unit,
-    onAmountChange: (String) -> Unit,
-    onDateChange: (String) -> Unit,
-    onCategoryChange: (String) -> Unit,
-    onSave: () -> Unit,
-    onCancel: () -> Unit
+    uiState: AddTransactionUIState
 ) {
+    val event = LocalAddTransactionEvent.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .systemBarsPadding()
     ) {
-        TopBar(onCancel = onCancel)
+        TopAppBarComponent(
+            leftIcon1 = Icons.AutoMirrored.Filled.ArrowBack,
+            onLeftIcon1Click = event.onCancel,
+            title = "Add Transaction"
+        )
 
         Column(
             modifier = Modifier
@@ -75,73 +88,58 @@ fun AddTransactionScreen(
 
             AmountSection(
                 value = uiState.amount,
-                onValueChange = onAmountChange,
+                onValueChange = event.onAmountChange,
                 isError = uiState.amountError
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             FormInput(
-                label = "Transaction Title",
+                label = "Title",
                 value = uiState.title,
-                onValueChange = onTitleChange,
+                onValueChange = event.onTitleChange,
                 isError = uiState.titleError,
-                placeholder = "What did you spend on?",
+                placeholder = "What is this for?",
                 trailingIcon = { Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(18.dp)) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            FormInput(
+            DateField(
                 label = "Date",
                 value = uiState.date,
-                onValueChange = onDateChange,
                 isError = uiState.dateError,
-                placeholder = "YYYY-MM-DD",
-                trailingIcon = { Icon(Icons.Default.CalendarMonth, contentDescription = null, modifier = Modifier.size(18.dp)) }
+                onClick = event.onDateClick
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CategorySection(selectedCategory = uiState.category, onCategorySelected = onCategoryChange)
+            TypeSection(selectedType = uiState.type, onTypeSelected = event.onTypeChange)
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            AttachReceiptField()
+            CategorySection(
+                selectedType = uiState.type,
+                selectedCategory = uiState.category,
+                onCategorySelected = event.onCategoryChange
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            AttachmentField(
+                hasAttachment = uiState.attachmentPath != null,
+                onClick = event.onAttachmentClick
+            )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             SaveButton(
                 isSaving = uiState.isSaving,
-                onClick = onSave
+                onClick = event.onSave
             )
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-    }
-}
-
-@Composable
-private fun TopBar(onCancel: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 4.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = onCancel) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
-                tint = MaterialTheme.colorScheme.onBackground
-            )
-        }
-        Text(
-            text = "Add Transaction",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground
-        )
     }
 }
 
@@ -285,10 +283,151 @@ private fun FormInput(
 }
 
 @Composable
+private fun DateField(
+    label: String,
+    value: String,
+    isError: Boolean,
+    onClick: () -> Unit
+) {
+    Column {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(6.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .border(
+                    width = 1.dp,
+                    color = if (isError) CoralExpense else MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .background(Color.White, RoundedCornerShape(8.dp))
+                .padding(horizontal = 14.dp)
+                .clickable(onClick = onClick),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+                Icon(
+                    imageVector = Icons.Default.CalendarMonth,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+        if (isError) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Date is required",
+                style = MaterialTheme.typography.labelSmall,
+                color = CoralExpense
+            )
+        }
+    }
+}
+
+@Composable
+private fun TypeSection(
+    selectedType: String,
+    onTypeSelected: (String) -> Unit
+) {
+    Column {
+        Text(
+            text = "Type",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(6.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            TypeOption(
+                modifier = Modifier.weight(1f),
+                label = "Expense",
+                isSelected = selectedType == "EXPENSE",
+                color = CoralExpense,
+                onClick = { onTypeSelected("EXPENSE") }
+            )
+            TypeOption(
+                modifier = Modifier.weight(1f),
+                label = "Income",
+                isSelected = selectedType == "INCOME",
+                color = GreenIncome,
+                onClick = { onTypeSelected("INCOME") }
+            )
+        }
+    }
+}
+
+@Composable
+private fun TypeOption(
+    modifier: Modifier = Modifier,
+    label: String,
+    isSelected: Boolean,
+    color: Color,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .height(46.dp)
+            .background(
+                color = if (isSelected) color else Color.White,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = if (isSelected) color else MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            color = if (isSelected) Color.White else MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+        )
+    }
+}
+
+@Composable
 private fun CategorySection(
+    selectedType: String,
     selectedCategory: String,
     onCategorySelected: (String) -> Unit
 ) {
+    val categories = if (selectedType == "EXPENSE") {
+        listOf(
+            "Food" to Icons.Default.Restaurant,
+            "Transport" to Icons.Default.DirectionsCar,
+            "Shopping" to Icons.Default.ShoppingCart,
+            "Bills" to Icons.Default.Receipt
+        )
+    } else {
+        listOf(
+            "Salary" to Icons.Default.AccountBalance,
+            "Freelance" to Icons.Default.Computer,
+            "Investment" to Icons.Default.TrendingUp,
+            "Gift" to Icons.Default.CardGiftcard
+        )
+    }
+
     Column {
         Text(
             text = "Category",
@@ -300,12 +439,28 @@ private fun CategorySection(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            listOf("Shopping", "Food", "Travel", "Other").forEach { category ->
+            categories.take(2).forEach { (name, icon) ->
                 CategoryChip(
                     modifier = Modifier.weight(1f),
-                    label = category,
-                    isSelected = selectedCategory == category,
-                    onClick = { onCategorySelected(category) }
+                    icon = icon,
+                    label = name,
+                    isSelected = selectedCategory == name,
+                    onClick = { onCategorySelected(name) }
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            categories.drop(2).forEach { (name, icon) ->
+                CategoryChip(
+                    modifier = Modifier.weight(1f),
+                    icon = icon,
+                    label = name,
+                    isSelected = selectedCategory == name,
+                    onClick = { onCategorySelected(name) }
                 )
             }
         }
@@ -315,36 +470,49 @@ private fun CategorySection(
 @Composable
 private fun CategoryChip(
     modifier: Modifier = Modifier,
+    icon: ImageVector,
     label: String,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
-            .height(38.dp)
+            .height(72.dp)
             .background(
                 color = if (isSelected) DeepNavy else Color.White,
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(12.dp)
             )
             .border(
                 width = 1.dp,
                 color = if (isSelected) DeepNavy else MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(12.dp)
             )
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = label,
-            color = if (isSelected) Color.White else MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.labelSmall,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
-        )
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                tint = if (isSelected) Color.White else DeepNavy,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = label,
+                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+            )
+        }
     }
 }
 
 @Composable
-private fun AttachReceiptField() {
+private fun AttachmentField(
+    hasAttachment: Boolean,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -354,7 +522,8 @@ private fun AttachReceiptField() {
                 color = MaterialTheme.colorScheme.outline,
                 shape = RoundedCornerShape(8.dp)
             )
-            .background(Color.White, RoundedCornerShape(8.dp)),
+            .background(Color.White, RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -365,13 +534,13 @@ private fun AttachReceiptField() {
                 imageVector = Icons.Default.AttachFile,
                 contentDescription = null,
                 modifier = Modifier.size(20.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = if (hasAttachment) DeepNavy else MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "Attach Receipt Photo",
+                text = if (hasAttachment) "Receipt attached" else "Attach Receipt Photo",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = if (hasAttachment) DeepNavy else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }

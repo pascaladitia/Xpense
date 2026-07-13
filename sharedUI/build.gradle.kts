@@ -1,6 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -14,13 +15,23 @@ plugins {
     alias(libs.plugins.buildKonfig)
 }
 
-kotlin {
-    android {
-        namespace = "com.pascal.xpense"
-        compileSdk = 36
+android {
+    namespace = "com.pascal.xpense.sharedUI"
+    compileSdk = 36
+
+    defaultConfig {
         minSdk = 24
-        androidResources.enable = true
-        compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+kotlin {
+    androidTarget {
+        compilerOptions { jvmTarget = JvmTarget.JVM_17 }
     }
 
     iosX64()
@@ -64,6 +75,8 @@ kotlin {
 
             implementation(libs.moko.permission)
             implementation(libs.moko.permission.camera)
+            implementation(libs.moko.permission.location)
+            implementation(libs.moko.permission.notifications)
             implementation(libs.paging.compose.common)
             implementation(libs.paging.common)
             implementation(libs.constraintlayout.compose.multiplatform)
@@ -76,6 +89,12 @@ kotlin {
             implementation(libs.emoji2)
             implementation(libs.emoji2.view.helper)
             implementation(libs.compose.multiplatform.media.player)
+            implementation(libs.firebase.app)
+            implementation(libs.firebase.auth)
+            implementation(libs.firebase.config)
+            implementation(libs.firebase.firestore)
+            implementation(libs.firebase.messaging)
+            implementation(libs.compottie)
         }
 
         commonTest.dependencies {
@@ -87,12 +106,20 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.ui.tooling)
+            implementation(libs.androidx.ui.tooling.android)
+            implementation(libs.androidx.ui.tooling.preview)
+            implementation(libs.androidx.customview)
+            implementation(libs.androidx.customview.poolingcontainer)
+            implementation(libs.emoji2)
+            implementation(libs.emoji2.view.helper)
 
             implementation(libs.itext7.core)
             implementation(libs.androidx.preference.ktx)
+            implementation(libs.androidx.appcompat)
             implementation(libs.room.runtime.android)
             implementation(libs.play.services.auth)
-            implementation(libs.androidx.ui.tooling)
+            implementation(libs.play.services.location)
         }
 
         iosMain.dependencies {
@@ -108,6 +135,7 @@ kotlin {
             binaries {
                 framework {
                     baseName = "SharedUI"
+                    binaryOption("bundleId", "com.pascal.xpense.sharedUI")
                     isStatic = true
                 }
             }
@@ -115,7 +143,7 @@ kotlin {
 }
 
 dependencies {
-    androidRuntimeClasspath(libs.compose.ui.tooling)
+    debugImplementation(libs.compose.ui.tooling)
 }
 
 buildkonfig {

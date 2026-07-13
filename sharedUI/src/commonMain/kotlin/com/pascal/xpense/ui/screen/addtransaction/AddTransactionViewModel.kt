@@ -44,12 +44,17 @@ class AddTransactionViewModel(
         _uiState.update { it.copy(date = value, dateError = false) }
     }
 
+    fun updateType(value: String) {
+        val defaultCategory = if (value == "EXPENSE") "Food" else "Salary"
+        _uiState.update { it.copy(type = value, category = defaultCategory) }
+    }
+
     fun updateCategory(value: String) {
         _uiState.update { it.copy(category = value) }
     }
 
-    fun updateNote(value: String) {
-        _uiState.update { it.copy(note = value) }
+    fun setAttachment(path: String?) {
+        _uiState.update { it.copy(attachmentPath = path) }
     }
 
     fun save(onSuccess: () -> Unit) {
@@ -78,9 +83,10 @@ class AddTransactionViewModel(
                 TransactionEntity(
                     title = state.title.trim(),
                     amount = amountValue!!,
-                    category = state.category,
                     date = state.date,
-                    type = TransactionEntity.TYPE_EXPENSE
+                    type = state.type,
+                    category = state.category,
+                    attachmentPath = state.attachmentPath
                 )
             )
 

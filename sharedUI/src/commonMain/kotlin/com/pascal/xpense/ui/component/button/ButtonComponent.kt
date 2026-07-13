@@ -26,9 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.AppTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Home
-import xpense.sharedui.generated.resources.Res
-import xpense.sharedui.generated.resources.logo
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ButtonComponent(
@@ -38,6 +35,7 @@ fun ButtonComponent(
     height: Dp = 48.dp,
     icon: ImageVector = FeatherIcons.Home,
     color: Color = MaterialTheme.colorScheme.primary,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     ElevatedButton(
@@ -48,6 +46,7 @@ fun ButtonComponent(
         elevation = ButtonDefaults.elevatedButtonElevation(
             defaultElevation = 0.dp
         ),
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(color),
         onClick = { onClick() },
     ) {
@@ -57,7 +56,7 @@ fun ButtonComponent(
             if (isIcon == 1) {
                 Icon(
                     modifier = Modifier.size(24.dp),
-                    painter = painterResource(Res.drawable.logo),
+                    imageVector = icon,
                     contentDescription = null,
                     tint = Color.White
                 )
@@ -88,6 +87,7 @@ fun ButtonOutlineComponent(
     modifier: Modifier = Modifier,
     text: String,
     isIcon: Int = 0,
+    icon: ImageVector = FeatherIcons.Home,
     height: Dp = 48.dp,
     color: Color = MaterialTheme.colorScheme.primary,
     onClick: () -> Unit
@@ -100,11 +100,13 @@ fun ButtonOutlineComponent(
         shape = RoundedCornerShape(16.dp),
         onClick = { onClick() },
     ) {
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             if (isIcon == 1) {
                 Icon(
                     modifier = Modifier.size(24.dp),
-                    painter = painterResource(Res.drawable.logo),
+                    imageVector = icon,
                     contentDescription = null,
                     tint = color
                 )
@@ -121,7 +123,7 @@ fun ButtonOutlineComponent(
                 Spacer(modifier = Modifier.width(16.dp))
                 Icon(
                     modifier = Modifier.size(24.dp),
-                    painter = painterResource(Res.drawable.logo),
+                    imageVector = icon,
                     contentDescription = null,
                     tint = color
                 )

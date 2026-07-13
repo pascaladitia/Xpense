@@ -5,26 +5,19 @@ import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Entity(
-    tableName = "transactions"
-)
+@Entity(tableName = "transactions")
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-
     val title: String,
     val amount: Double,
-    val category: String,
-
     val date: String,
-
     val type: String,
-
-    val note: String? = null,
-    val attachmentPath: String? = null,
-    val createdAt: Long = 0
+    val category: String = "General",
+    val attachmentPath: String? = null
 ) {
     companion object {
+        const val TYPE_INCOME = "INCOME"
         const val TYPE_EXPENSE = "EXPENSE"
     }
 }
