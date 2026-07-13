@@ -1,0 +1,17 @@
+<resources>
+    <string name="cyclone">Cyclone</string>
+    <string name="open_github">Open github</string>
+    <string name="run">Run</string>
+    <string name="stop">Stop</string>
+    <string name="theme">Theme</string>
+    <string name="select_photo_source">Select Photo Source</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="close">Close</string>
+    <string name="label_get_started">Get Started</string>
+    <string name="label_title_onboarding">Unlimited offer of movies, series &amp; program</string>
+    <string name="label_description_onboarding">Get ready to immerse yourself in a world of anime. with a diverse collection of titles</string>
+    <string name="label_completed">Completed</string>
+    <string name="label_ongoing">On Going</string>
+    <string name="label_episode">%1$d Episode</string>
+</resources>
