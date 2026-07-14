@@ -39,14 +39,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
-
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.AppTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import compose.icons.feathericons.Eye
 import compose.icons.feathericons.EyeOff
-import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.field_cannot_be_empty
+import xpense.sharedui.generated.resources.hide_password
+import xpense.sharedui.generated.resources.show_password
 
 @Composable
 fun FormComponent(
@@ -409,7 +413,7 @@ fun FormPasswordComponent(
                                     onIconClick()
                                 },
                             imageVector = if (isPasswordVisible) FeatherIcons.Eye else FeatherIcons.EyeOff,
-                            contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
+                            contentDescription = if (isPasswordVisible) stringResource(Res.string.hide_password) else stringResource(Res.string.show_password),
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -429,7 +433,7 @@ fun TextError(text: String) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "$text tidak boleh kosong.",
+            text = stringResource(Res.string.field_cannot_be_empty, text),
             style = MaterialTheme.typography.labelSmall.copy(
                 color = Red
             ),
@@ -443,7 +447,7 @@ fun TextError2(text: AnnotatedString) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "$text tidak boleh kosong.",
+            text = stringResource(Res.string.field_cannot_be_empty, text),
             style = MaterialTheme.typography.labelSmall.copy(
                 color = Red
             ),

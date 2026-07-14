@@ -34,6 +34,10 @@ import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.AppTheme
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Search
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.search_desc
+import xpense.sharedui.generated.resources.search_transaction
 
 @Composable
 fun Search(
@@ -81,7 +85,7 @@ fun Search(
                     Icon(
                         modifier = Modifier.size(16.dp),
                         imageVector = FeatherIcons.Search,
-                        contentDescription = "Search",
+                        contentDescription = stringResource(Res.string.search_desc),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
 
@@ -90,7 +94,7 @@ fun Search(
                     Box {
                         if (searchText.isEmpty()) {
                             Text(
-                                text = "Search Transaction...",
+                                text = stringResource(Res.string.search_transaction),
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.onSurface
                                 )

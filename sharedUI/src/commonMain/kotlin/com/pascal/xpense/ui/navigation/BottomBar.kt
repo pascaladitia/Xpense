@@ -29,6 +29,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.ai_nav
+import xpense.sharedui.generated.resources.analytics
+import xpense.sharedui.generated.resources.dashboard
+import xpense.sharedui.generated.resources.profile
 
 @Composable
 fun BottomBar(
@@ -46,25 +52,25 @@ fun BottomBar(
 
             val navigationItems = listOf(
                 NavigationItem(
-                    title = "Dashboard",
+                    title = stringResource(Res.string.dashboard),
                     iconFilled = Icons.Filled.Home,
                     iconOutlined = Icons.Outlined.Home,
                     screen = Screen.DashboardScreen
                 ),
                 NavigationItem(
-                    title = "Analytics",
+                    title = stringResource(Res.string.analytics),
                     iconFilled = Icons.Filled.BarChart,
                     iconOutlined = Icons.Outlined.BarChart,
                     screen = Screen.AnalyticsScreen
                 ),
                 NavigationItem(
-                    title = "AI",
+                    title = stringResource(Res.string.ai_nav),
                     iconFilled = Icons.Filled.Chat,
                     iconOutlined = Icons.Outlined.Chat,
                     screen = Screen.ChatScreen
                 ),
                 NavigationItem(
-                    title = "Profile",
+                    title = stringResource(Res.string.profile),
                     iconFilled = Icons.Filled.Person,
                     iconOutlined = Icons.Outlined.Person,
                     screen = Screen.ProfileScreen

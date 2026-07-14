@@ -47,8 +47,10 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.add_transaction_desc
 import xpense.sharedui.generated.resources.app_name
 import xpense.sharedui.generated.resources.logo
+import xpense.sharedui.generated.resources.transactions_title
 
 @Composable
 fun DashboardScreen(
@@ -145,7 +147,7 @@ fun DashboardScreen(
                 item(key = "transactionsTitle") {
                     StaggeredAnimatedItem(index = 2) {
                         Text(
-                            text = "Transactions",
+                            text = stringResource(Res.string.transactions_title),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -209,7 +211,7 @@ fun DashboardScreen(
                     contentColor = Color.White,
                     shape = CircleShape
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add Transaction")
+                    Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(Res.string.add_transaction_desc))
                 }
             }
         }

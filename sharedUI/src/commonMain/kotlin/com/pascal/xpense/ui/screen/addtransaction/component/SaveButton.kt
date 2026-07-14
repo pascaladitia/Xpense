@@ -13,6 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pascal.xpense.ui.theme.DeepNavy
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.save_transaction
+import xpense.sharedui.generated.resources.saving
 
 @Composable
 fun SaveButton(
@@ -29,7 +33,7 @@ fun SaveButton(
         colors = ButtonDefaults.buttonColors(containerColor = DeepNavy)
     ) {
         Text(
-            text = if (isSaving) "Saving..." else "Save Transaction",
+            text = if (isSaving) stringResource(Res.string.saving) else stringResource(Res.string.save_transaction),
             color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp

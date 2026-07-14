@@ -7,6 +7,7 @@ data class AddTransactionUIState(
     val type: String = "EXPENSE",
     val category: String = "Food",
     val attachmentPath: String? = null,
+    val attachmentBytes: ByteArray? = null,
     val amountError: Boolean = false,
     val titleError: Boolean = false,
     val dateError: Boolean = false,

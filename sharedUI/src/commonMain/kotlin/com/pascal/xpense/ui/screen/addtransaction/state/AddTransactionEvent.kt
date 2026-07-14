@@ -16,5 +16,6 @@ data class AddTransactionEvent(
     val onSave: () -> Unit = {},
     val onCancel: () -> Unit = {},
     val onDateClick: () -> Unit = {},
-    val onAttachmentClick: () -> Unit = {}
+    val onAttachmentClick: () -> Unit = {},
+    val onClearAttachment: () -> Unit = {}
 )

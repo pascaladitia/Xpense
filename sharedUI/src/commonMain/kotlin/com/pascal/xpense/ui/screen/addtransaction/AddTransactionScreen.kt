@@ -29,6 +29,12 @@ import com.pascal.xpense.ui.screen.addtransaction.component.SaveButton
 import com.pascal.xpense.ui.screen.addtransaction.component.TypeSection
 import com.pascal.xpense.ui.screen.addtransaction.state.AddTransactionUIState
 import com.pascal.xpense.ui.screen.addtransaction.state.LocalAddTransactionEvent
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.add_transaction
+import xpense.sharedui.generated.resources.date
+import xpense.sharedui.generated.resources.title_hint
+import xpense.sharedui.generated.resources.transaction_title
 
 @Composable
 fun AddTransactionScreen(
@@ -45,7 +51,7 @@ fun AddTransactionScreen(
         TopAppBarComponent(
             leftIcon1 = Icons.AutoMirrored.Filled.ArrowBack,
             onLeftIcon1Click = event.onCancel,
-            title = "Add Transaction"
+            title = stringResource(Res.string.add_transaction)
         )
 
         Column(
@@ -69,18 +75,18 @@ fun AddTransactionScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             FormInput(
-                label = "Title",
+                label = stringResource(Res.string.transaction_title),
                 value = uiState.title,
                 onValueChange = event.onTitleChange,
                 isError = uiState.titleError,
-                placeholder = "What is this for?",
+                placeholder = stringResource(Res.string.title_hint),
                 trailingIcon = { Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(18.dp)) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             DateField(
-                label = "Date",
+                label = stringResource(Res.string.date),
                 value = uiState.date,
                 isError = uiState.dateError,
                 onClick = event.onDateClick
@@ -102,7 +108,9 @@ fun AddTransactionScreen(
 
             AttachmentField(
                 hasAttachment = uiState.attachmentPath != null,
-                onClick = event.onAttachmentClick
+                attachmentBytes = uiState.attachmentBytes,
+                onClick = event.onAttachmentClick,
+                onClear = event.onClearAttachment
             )
 
             Spacer(modifier = Modifier.height(32.dp))

@@ -38,6 +38,18 @@ import com.pascal.xpense.ui.screen.analytics.state.AnalyticsUIState
 import com.pascal.xpense.ui.theme.AppTheme
 import com.pascal.xpense.ui.theme.DeepNavy
 import com.pascal.xpense.ui.theme.GreenIncome
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.analytics
+import xpense.sharedui.generated.resources.category_breakdown
+import xpense.sharedui.generated.resources.loading
+import xpense.sharedui.generated.resources.no_expense_data
+import xpense.sharedui.generated.resources.saving_insight
+import xpense.sharedui.generated.resources.spent_less
+import xpense.sharedui.generated.resources.spent_more
+import xpense.sharedui.generated.resources.spending_overview
+import xpense.sharedui.generated.resources.top_spending
+import xpense.sharedui.generated.resources.total_spent_this_month
 
 @Composable
 fun AnalyticsScreen(
@@ -54,7 +66,7 @@ fun AnalyticsScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Analytics",
+            text = stringResource(Res.string.analytics),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
@@ -64,7 +76,7 @@ fun AnalyticsScreen(
 
         if (uiState.isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Loading...", style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(Res.string.loading), style = MaterialTheme.typography.bodyMedium)
             }
         } else {
             SpendingOverview(totalExpense = uiState.totalExpense)
@@ -100,7 +112,7 @@ private fun SpendingOverview(totalExpense: Double) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Spending Overview",
+                text = stringResource(Res.string.spending_overview),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onBackground
@@ -114,7 +126,7 @@ private fun SpendingOverview(totalExpense: Double) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Total spent this month",
+                text = stringResource(Res.string.total_spent_this_month),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -132,7 +144,7 @@ private fun TopSpendingCard(category: CategoryBreakdown) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Top Spending",
+                text = stringResource(Res.string.top_spending),
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.White.copy(alpha = 0.7f)
             )
@@ -164,7 +176,7 @@ private fun CategoryBreakdownSection(categories: List<CategoryBreakdown>) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Category Breakdown",
+                text = stringResource(Res.string.category_breakdown),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onBackground
@@ -189,7 +201,7 @@ private fun CategoryBreakdownSection(categories: List<CategoryBreakdown>) {
 
             if (categories.isEmpty()) {
                 Text(
-                    text = "No expense data yet",
+                    text = stringResource(Res.string.no_expense_data),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -268,16 +280,16 @@ private fun SavingInsightCard(
             Spacer(modifier = Modifier.width(12.dp))
             Column {
                 Text(
-                    text = "Saving Insight",
+                    text = stringResource(Res.string.saving_insight),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
                     text = if (isSavingMore) {
-                        "You spent ${percent.toInt()}% less than last month"
+                        stringResource(Res.string.spent_less, percent.toInt())
                     } else {
-                        "You spent ${percent.toInt()}% more than last month"
+                        stringResource(Res.string.spent_more, percent.toInt())
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant

@@ -23,6 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.CoralExpense
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.date_required_error
 
 @Composable
 fun DateField(
@@ -74,7 +77,7 @@ fun DateField(
         if (isError) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Date is required",
+                text = stringResource(Res.string.date_required_error),
                 style = MaterialTheme.typography.labelSmall,
                 color = CoralExpense
             )

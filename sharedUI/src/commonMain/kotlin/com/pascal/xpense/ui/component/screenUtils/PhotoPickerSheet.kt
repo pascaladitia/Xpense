@@ -39,6 +39,14 @@ import dev.icerock.moko.permissions.camera.CAMERA
 import dev.icerock.moko.permissions.compose.BindEffect
 import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.add_photo
+import xpense.sharedui.generated.resources.cancel
+import xpense.sharedui.generated.resources.choose_from_gallery
+import xpense.sharedui.generated.resources.choose_from_gallery_desc
+import xpense.sharedui.generated.resources.take_photo
+import xpense.sharedui.generated.resources.take_photo_desc
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,7 +93,7 @@ fun PhotoPickerSheet(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                text = "Add Photo",
+                text = stringResource(Res.string.add_photo),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 4.dp),
@@ -93,15 +101,15 @@ fun PhotoPickerSheet(
 
             PhotoPickerOption(
                 icon = Icons.Default.CameraAlt,
-                label = "Take Photo",
-                description = "Use camera to capture a new photo",
+                label = stringResource(Res.string.take_photo),
+                description = stringResource(Res.string.take_photo_desc),
                 onClick = { launchCamera() },
             )
 
             PhotoPickerOption(
                 icon = Icons.Default.Photo,
-                label = "Choose from Gallery",
-                description = "Select an existing photo",
+                label = stringResource(Res.string.choose_from_gallery),
+                description = stringResource(Res.string.choose_from_gallery_desc),
                 onClick = { imagePicker.launch() },
             )
 
@@ -112,7 +120,7 @@ fun PhotoPickerSheet(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
             ) {
-                Text("Cancel")
+                Text(stringResource(Res.string.cancel))
             }
 
             Spacer(Modifier.height(4.dp))

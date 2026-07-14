@@ -28,7 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.app_logo_desc
 import xpense.sharedui.generated.resources.logo
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +57,7 @@ fun TopAppBarComponent(
             if (logoRes != null) {
                 Image(
                     painter = painterResource(logoRes),
-                    contentDescription = "App Logo",
+                    contentDescription = stringResource(Res.string.app_logo_desc),
                     modifier = Modifier.width(120.dp)
                 )
             }

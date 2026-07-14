@@ -53,8 +53,12 @@ class AddTransactionViewModel(
         _uiState.update { it.copy(category = value) }
     }
 
-    fun setAttachment(path: String?) {
-        _uiState.update { it.copy(attachmentPath = path) }
+    fun setAttachment(path: String?, bytes: ByteArray? = null) {
+        _uiState.update { it.copy(attachmentPath = path, attachmentBytes = bytes) }
+    }
+
+    fun clearAttachment() {
+        _uiState.update { it.copy(attachmentPath = null, attachmentBytes = null) }
     }
 
     fun save(onSuccess: () -> Unit) {

@@ -19,7 +19,9 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import org.jetbrains.compose.resources.stringResource
 import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.loading_desc
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
@@ -51,7 +53,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
                     composition = composition,
                     progress = { progress }
                 ),
-                contentDescription = "Loading"
+                contentDescription = stringResource(Res.string.loading_desc)
             )
         }
     }

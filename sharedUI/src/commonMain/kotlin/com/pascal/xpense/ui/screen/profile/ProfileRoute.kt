@@ -21,7 +21,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pascal.xpense.ui.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.app_name
+import xpense.sharedui.generated.resources.personal_finance_manager
 
 @Composable
 fun ProfileRoute(
@@ -52,14 +56,14 @@ fun ProfileContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "ExpenseTracker",
+            text = stringResource(Res.string.app_name),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Personal Finance Manager",
+            text = stringResource(Res.string.personal_finance_manager),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

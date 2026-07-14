@@ -5,9 +5,22 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import com.pascal.xpense.ContextUtils
+import java.io.File
 
 actual fun showToast(msg: String) {
     Toast.makeText(ContextUtils.context, msg, Toast.LENGTH_SHORT).show()
+}
+
+actual fun saveImageBytesToFile(bytes: ByteArray, name: String): String? {
+    return try {
+        val dir = File(ContextUtils.context.filesDir, "attachments")
+        dir.mkdirs()
+        val file = File(dir, name)
+        file.writeBytes(bytes)
+        file.absolutePath
+    } catch (_: Exception) {
+        null
+    }
 }
 
 actual fun actionShareUrl(url: String?) {

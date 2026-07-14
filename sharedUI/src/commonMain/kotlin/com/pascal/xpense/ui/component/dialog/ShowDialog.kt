@@ -27,6 +27,11 @@ import com.pascal.xpense.ui.component.button.ButtonComponent
 import com.pascal.xpense.ui.component.button.ButtonOutlineComponent
 import com.pascal.xpense.ui.component.form.FormPasswordComponent
 import com.pascal.xpense.ui.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.masukan_pin
+import xpense.sharedui.generated.resources.pin
+import xpense.sharedui.generated.resources.tutup
 
 @Composable
 fun ShowDialog(
@@ -110,7 +115,7 @@ fun ShowChoiceDialog(
                 Spacer(modifier = Modifier.height(16.dp))
                 ButtonOutlineComponent(
                     color = color,
-                    text = "Tutup"
+                    text = stringResource(Res.string.tutup)
                 ) {
                     onCancel()
                 }
@@ -146,8 +151,8 @@ fun ShowFormDialog(
                 .padding(16.dp)
         ) {
             FormPasswordComponent(
-                title = "Pin",
-                hintText = "Masukan Pin",
+                title = stringResource(Res.string.pin),
+                hintText = stringResource(Res.string.masukan_pin),
                 value = text,
                 isShowTitle = true,
                 onValueChange = {
@@ -173,7 +178,7 @@ fun ShowFormDialog(
                 Spacer(modifier = Modifier.height(16.dp))
                 ButtonOutlineComponent(
                     color = color,
-                    text = "Tutup"
+                    text = stringResource(Res.string.tutup)
                 ) {
                     onCancel()
                 }

@@ -21,6 +21,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.CoralExpense
 import com.pascal.xpense.ui.theme.DeepNavy
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.amount
+import xpense.sharedui.generated.resources.valid_amount_error
 
 @Composable
 fun AmountSection(
@@ -30,7 +34,7 @@ fun AmountSection(
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = "Amount",
+            text = stringResource(Res.string.amount),
             style = MaterialTheme.typography.labelSmall,
             color = if (isError) CoralExpense else MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -67,7 +71,7 @@ fun AmountSection(
         if (isError) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Please enter a valid amount",
+                text = stringResource(Res.string.valid_amount_error),
                 style = MaterialTheme.typography.labelSmall,
                 color = CoralExpense
             )

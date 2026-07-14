@@ -31,6 +31,13 @@ import coil3.compose.LocalPlatformContext
 import com.pascal.xpense.ui.component.screenUtils.getAsyncImageLoader
 import com.pascal.xpense.ui.screen.chat.state.PendingImage
 import com.pascal.xpense.ui.theme.DeepNavy
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.attach_image_desc
+import xpense.sharedui.generated.resources.message_placeholder
+import xpense.sharedui.generated.resources.remove_image_desc
+import xpense.sharedui.generated.resources.selected_image_desc
+import xpense.sharedui.generated.resources.send_desc
 
 @Composable
 fun ChatInputBar(
@@ -59,7 +66,7 @@ fun ChatInputBar(
                     AsyncImage(
                         model = pendingImage.bytes,
                         imageLoader = getAsyncImageLoader(LocalPlatformContext.current),
-                        contentDescription = "Selected image",
+                        contentDescription = stringResource(Res.string.selected_image_desc),
                         modifier = Modifier
                             .size(56.dp)
                             .clip(RoundedCornerShape(8.dp))
@@ -73,7 +80,7 @@ fun ChatInputBar(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Remove image",
+                            contentDescription = stringResource(Res.string.remove_image_desc),
                             tint = Color.White,
                             modifier = Modifier.size(12.dp)
                         )
@@ -96,7 +103,7 @@ fun ChatInputBar(
             IconButton(onClick = onAttachClick) {
                 Icon(
                     imageVector = Icons.Outlined.Image,
-                    contentDescription = "Attach image",
+                    contentDescription = stringResource(Res.string.attach_image_desc),
                     tint = DeepNavy
                 )
             }
@@ -105,7 +112,7 @@ fun ChatInputBar(
                 value = input,
                 onValueChange = onInputChange,
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Ketik pesan...") },
+                placeholder = { Text(stringResource(Res.string.message_placeholder)) },
                 shape = RoundedCornerShape(24.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -124,7 +131,7 @@ fun ChatInputBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,
-                    contentDescription = "Send",
+                    contentDescription = stringResource(Res.string.send_desc),
                     tint = if (isLoading || (input.isBlank() && pendingImage == null)) Color.Gray else DeepNavy
                 )
             }

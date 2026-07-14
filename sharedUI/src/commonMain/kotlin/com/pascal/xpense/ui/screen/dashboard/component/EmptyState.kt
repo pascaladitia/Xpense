@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import xpense.sharedui.generated.resources.Res
 import xpense.sharedui.generated.resources.img_empty_state
+import xpense.sharedui.generated.resources.no_transactions
+import xpense.sharedui.generated.resources.start_tracking
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun EmptyState() {
@@ -32,13 +35,13 @@ fun EmptyState() {
             contentDescription = null
         )
         Text(
-            text = "No transactions yet",
+            text = stringResource(Res.string.no_transactions),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Start tracking your expenses to see them here",
+            text = stringResource(Res.string.start_tracking),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center

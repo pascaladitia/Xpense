@@ -16,6 +16,8 @@ expect fun showToast(msg: String)
 
 expect fun actionShareUrl(url: String?)
 
+expect fun saveImageBytesToFile(bytes: ByteArray, name: String): String?
+
 fun addRandomParam(url: String?): String? {
     if (url == null) return null
 

@@ -33,6 +33,9 @@ import com.pascal.xpense.ui.screen.chat.state.ChatUIState
 import com.pascal.xpense.ui.screen.chat.state.LocalChatEvent
 import com.pascal.xpense.ui.theme.CoralExpense
 import com.pascal.xpense.ui.theme.DeepNavy
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.ai_assistant
 
 @Composable
 fun ChatScreen(
@@ -50,7 +53,7 @@ fun ChatScreen(
 
     Column(modifier = modifier.fillMaxSize()) {
         TopAppBarComponent(
-            title = "AI Assistant",
+            title = stringResource(Res.string.ai_assistant),
             color = DeepNavy
         )
 

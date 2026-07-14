@@ -20,6 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.CoralExpense
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.required_hint
 
 @Composable
 fun FormInput(
@@ -40,7 +43,7 @@ fun FormInput(
             if (isError) {
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = "(required)",
+                    text = stringResource(Res.string.required_hint),
                     style = MaterialTheme.typography.labelSmall,
                     color = CoralExpense
                 )

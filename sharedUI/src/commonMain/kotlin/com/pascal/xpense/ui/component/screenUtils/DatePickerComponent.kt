@@ -49,6 +49,12 @@ import androidx.compose.ui.unit.sp
 import com.pascal.xpense.ui.component.button.ButtonComponent
 import com.pascal.xpense.utils.localizedMonthName
 import com.pascal.xpense.utils.localizedWeekdayNames
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.confirm
+import xpense.sharedui.generated.resources.from_label
+import xpense.sharedui.generated.resources.select_date
+import xpense.sharedui.generated.resources.to_label
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -98,7 +104,7 @@ fun DatePickerComponent(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
-                text = if (isRange) "Select Date Range" else "Select Date",
+                text = stringResource(Res.string.select_date),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -180,7 +186,7 @@ fun DatePickerComponent(
 
             ButtonComponent(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Confirm",
+                text = stringResource(Res.string.confirm),
                 enabled = selectedStart != null,
                 onClick = {
                     selectedStart?.let { start ->
@@ -215,7 +221,7 @@ private fun SelectedDateRow(
         if (isRange) {
             Column(horizontalAlignment = Alignment.Start) {
                 Text(
-                    text = "From",
+                    text = stringResource(Res.string.from_label),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -233,7 +239,7 @@ private fun SelectedDateRow(
             )
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    text = "To",
+                    text = stringResource(Res.string.to_label),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

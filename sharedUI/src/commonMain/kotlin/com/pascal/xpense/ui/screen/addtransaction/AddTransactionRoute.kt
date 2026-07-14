@@ -12,6 +12,7 @@ import com.pascal.xpense.ui.component.screenUtils.DatePickerComponent
 import com.pascal.xpense.ui.component.screenUtils.PhotoPickerSheet
 import com.pascal.xpense.ui.screen.addtransaction.state.AddTransactionEvent
 import com.pascal.xpense.ui.screen.addtransaction.state.LocalAddTransactionEvent
+import com.pascal.xpense.utils.saveImageBytesToFile
 import org.koin.compose.koinInject
 
 @Composable
@@ -34,7 +35,8 @@ fun AddTransactionRoute(
             onSave = { viewModel.save(onNavigateBack) },
             onCancel = onNavigateBack,
             onDateClick = { showDatePicker = true },
-            onAttachmentClick = { showPhotoPicker = true }
+            onAttachmentClick = { showPhotoPicker = true },
+            onClearAttachment = { viewModel.clearAttachment() }
         )
     }
 
@@ -58,7 +60,8 @@ fun AddTransactionRoute(
     if (showPhotoPicker) {
         PhotoPickerSheet(
             onPhotoSelected = { bytes, name ->
-                viewModel.setAttachment(name)
+                val path = if (bytes != null) saveImageBytesToFile(bytes, name) else null
+                viewModel.setAttachment(path, bytes)
             },
             onDismiss = { showPhotoPicker = false }
         )

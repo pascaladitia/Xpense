@@ -21,6 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.CoralExpense
 import com.pascal.xpense.ui.theme.GreenIncome
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.expense
+import xpense.sharedui.generated.resources.income
+import xpense.sharedui.generated.resources.type
 
 @Composable
 fun TypeSection(
@@ -29,7 +34,7 @@ fun TypeSection(
 ) {
     Column {
         Text(
-            text = "Type",
+            text = stringResource(Res.string.type),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -40,14 +45,14 @@ fun TypeSection(
         ) {
             TypeOption(
                 modifier = Modifier.weight(1f),
-                label = "Expense",
+                label = stringResource(Res.string.expense),
                 isSelected = selectedType == "EXPENSE",
                 color = CoralExpense,
                 onClick = { onTypeSelected("EXPENSE") }
             )
             TypeOption(
                 modifier = Modifier.weight(1f),
-                label = "Income",
+                label = stringResource(Res.string.income),
                 isSelected = selectedType == "INCOME",
                 color = GreenIncome,
                 onClick = { onTypeSelected("INCOME") }

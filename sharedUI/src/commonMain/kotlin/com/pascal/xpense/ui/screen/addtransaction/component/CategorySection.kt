@@ -32,6 +32,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.DeepNavy
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.category
 
 @Composable
 fun CategorySection(
@@ -57,7 +60,7 @@ fun CategorySection(
 
     Column {
         Text(
-            text = "Category",
+            text = stringResource(Res.string.category),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

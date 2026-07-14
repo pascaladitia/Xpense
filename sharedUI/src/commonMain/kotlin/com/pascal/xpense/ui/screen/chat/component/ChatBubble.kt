@@ -23,6 +23,9 @@ import coil3.compose.LocalPlatformContext
 import com.pascal.xpense.ui.component.screenUtils.getAsyncImageLoader
 import com.pascal.xpense.ui.screen.chat.state.ChatMessage
 import com.pascal.xpense.ui.theme.DeepNavy
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.attached_image_desc
 
 @Composable
 fun ChatBubble(message: ChatMessage) {
@@ -50,7 +53,7 @@ fun ChatBubble(message: ChatMessage) {
                 AsyncImage(
                     model = message.imageBytes,
                     imageLoader = getAsyncImageLoader(LocalPlatformContext.current),
-                    contentDescription = "Attached image",
+                        contentDescription = stringResource(Res.string.attached_image_desc),
                     modifier = Modifier
                         .size(160.dp)
                         .clip(RoundedCornerShape(12.dp))
