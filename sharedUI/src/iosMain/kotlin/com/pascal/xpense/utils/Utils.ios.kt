@@ -3,7 +3,6 @@ package com.pascal.xpense.utils
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
-import platform.Foundation.NSData
 import platform.Foundation.NSDate
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
@@ -17,6 +16,9 @@ import platform.UIKit.UIAlertController
 import platform.UIKit.UIAlertControllerStyleAlert
 import platform.UIKit.UIApplication
 import platform.UIKit.UIViewController
+import platform.posix.fclose
+import platform.posix.fopen
+import platform.posix.fwrite
 
 actual fun showToast(msg: String) {
     val alert = UIAlertController.alertControllerWithTitle(
@@ -77,14 +79,12 @@ actual fun saveImageBytesToFile(bytes: ByteArray, name: String): String? {
             error = null
         )
         val filePath = "$attachmentsDir/$name"
-        val success = bytes.usePinned { pinned ->
-            val nsData = NSData(
-                bytes = pinned.addressOf(0),
-                length = bytes.size.toULong()
-            )
-            nsData.writeToFile(filePath, atomically = true)
+        val file = fopen(filePath, "wb") ?: return null
+        bytes.usePinned { pinned ->
+            fwrite(pinned.addressOf(0), 1UL, bytes.size.toULong(), file)
         }
-        if (success) filePath else null
+        fclose(file)
+        filePath
     } catch (_: Exception) {
         null
     }

@@ -90,11 +90,6 @@ kotlin {
             implementation(libs.emoji2)
             implementation(libs.emoji2.view.helper)
             implementation(libs.compose.multiplatform.media.player)
-            implementation(libs.firebase.app)
-            implementation(libs.firebase.auth)
-            implementation(libs.firebase.config)
-            implementation(libs.firebase.firestore)
-            implementation(libs.firebase.messaging)
             implementation(libs.compottie)
         }
 

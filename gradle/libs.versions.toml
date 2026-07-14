@@ -32,10 +32,8 @@ preferenceKtx = "1.2.1"
 peekaboo = "0.5.2"
 sqlite = "2.6.2"
 composeWebviewMultiplatform = "2.0.3"
-firebaseApp = "2.4.0"
 playServicesAuth = "21.5.1"
 googleServices = "4.4.4"
-firebase-bom = "34.11.0"
 itext7Core = "9.6.0"
 composeIcons = "1.1.1"
 androidx-customview-poolingcontainer = "1.1.0"
@@ -105,13 +103,7 @@ moko-permission-camera = { module = "dev.icerock.moko:permissions-camera", versi
 moko-permission-location = { module = "dev.icerock.moko:permissions-location", version.ref = "moko-permission" }
 moko-permission-notifications = { module = "dev.icerock.moko:permissions-notifications", version.ref = "moko-permission" }
 compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebviewMultiplatform" }
-firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseApp" }
-firebase-app = { module = "dev.gitlive:firebase-app", version.ref = "firebaseApp" }
-firebase-config = { module = "dev.gitlive:firebase-config", version.ref = "firebaseApp" }
-firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebaseApp" }
-firebase-messaging = { module = "dev.gitlive:firebase-messaging", version.ref = "firebaseApp" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 itext7-core = { module = "com.itextpdf:itext7-core", version.ref = "itext7Core" }
 composeIcons-featherIcons = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "composeIcons" }
 androidx-customview-poolingcontainer = { module = "androidx.customview:customview-poolingcontainer", version.ref = "androidx-customview-poolingcontainer" }
