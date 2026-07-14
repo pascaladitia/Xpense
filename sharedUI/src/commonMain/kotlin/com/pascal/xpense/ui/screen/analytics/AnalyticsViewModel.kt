@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 
 class AnalyticsViewModel(
@@ -34,9 +35,9 @@ class AnalyticsViewModel(
                 .fromEpochMilliseconds(currentTimeMillis())
                 .toLocalDateTime(TimeZone.currentSystemDefault())
 
-            val currentYearMonth = "${now.year}-${now.monthNumber.toString().padStart(2, '0')}"
+            val currentYearMonth = "${now.year}-${now.month.number.toString().padStart(2, '0')}"
 
-            val lastMonth = now.monthNumber - 1
+            val lastMonth = now.month.number - 1
             val lastYear = if (lastMonth == 0) now.year - 1 else now.year
             val lastMonthNumber = if (lastMonth == 0) 12 else lastMonth
             val lastYearMonth = "$lastYear-${lastMonthNumber.toString().padStart(2, '0')}"
