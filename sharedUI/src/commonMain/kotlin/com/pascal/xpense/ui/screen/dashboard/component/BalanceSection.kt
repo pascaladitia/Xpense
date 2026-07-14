@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,22 +17,30 @@ import com.pascal.xpense.ui.theme.GreenIncome
 import com.pascal.xpense.utils.formatAmount
 
 @Composable
-fun BalanceSection(totalBalance: Double) {
+fun BalanceSection(
+    modifier: Modifier = Modifier,
+    totalBalance: Double
+) {
+
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Total Balance",
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
         Spacer(modifier = Modifier.height(4.dp))
+
         Text(
             text = "$${formatAmount(totalBalance)}",
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
-            color = if (totalBalance >= 0) GreenIncome else CoralExpense
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }

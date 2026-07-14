@@ -12,10 +12,11 @@ fun DashboardRoute(
     viewModel: DashboardViewModel = koinInject<DashboardViewModel>(),
     onAddTransaction: () -> Unit
 ) {
+    val event = LocalDashboardEvent.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     CompositionLocalProvider(
-        LocalDashboardEvent provides LocalDashboardEvent.current.copy(
+        LocalDashboardEvent provides event.copy(
             onAddTransaction = onAddTransaction,
             onDeleteTransaction = { viewModel.deleteTransaction(it) }
         )
