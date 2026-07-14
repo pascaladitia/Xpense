@@ -82,7 +82,7 @@ class AddTransactionViewModel(
             localUseCase.saveTransaction(
                 TransactionEntity(
                     title = state.title.trim(),
-                    amount = amountValue!!,
+                    amount = amountValue,
                     date = state.date,
                     type = state.type,
                     category = state.category,
@@ -90,7 +90,12 @@ class AddTransactionViewModel(
                 )
             )
 
+            resetState()
             onSuccess()
         }
+    }
+
+    private fun resetState() {
+        _uiState.value = AddTransactionUIState()
     }
 }
