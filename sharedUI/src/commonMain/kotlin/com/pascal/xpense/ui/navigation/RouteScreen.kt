@@ -5,6 +5,7 @@
 
 package com.pascal.xpense.ui.navigation
 
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
@@ -24,6 +25,7 @@ import com.pascal.xpense.ui.screen.analytics.AnalyticsRoute
 import com.pascal.xpense.ui.screen.chat.ChatRoute
 import com.pascal.xpense.ui.screen.dashboard.DashboardRoute
 import com.pascal.xpense.ui.screen.profile.ProfileRoute
+import com.pascal.xpense.ui.screen.splash.SplashRoute
 
 @Composable
 fun RouteScreen(
@@ -52,10 +54,29 @@ fun RouteScreen(
             NavHost(
                 modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
                 navController = navController,
-                startDestination = Screen.DashboardScreen.route,
+                startDestination = Screen.SplashScreen.route
             ) {
+                composable(route = Screen.SplashScreen.route) {
+                    val animScope: AnimatedVisibilityScope = this
+
+                    SplashRoute(
+                        sharedTransitionScope = sharedScope,
+                        animatedVisibilityScope = animScope,
+                    ) {
+                        navController.navigate(Screen.DashboardScreen.route) {
+                            popUpTo(Screen.SplashScreen.route) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
+                    }
+                }
                 composable(route = Screen.DashboardScreen.route) {
+                    val animScope: AnimatedVisibilityScope = this
+
                     DashboardRoute(
+                        sharedTransitionScope = sharedScope,
+                        animatedVisibilityScope = animScope,
                         onAddTransaction = {
                             navController.navigate(Screen.AddTransactionScreen.route)
                         }

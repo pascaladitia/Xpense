@@ -1,5 +1,7 @@
 package com.pascal.xpense.ui.screen.dashboard
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.SharedTransitionScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pascal.xpense.data.local.entity.TransactionEntity
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.collections.copy
 
 class DashboardViewModel(
     private val localUseCase: LocalUseCase
@@ -21,6 +24,18 @@ class DashboardViewModel(
 
     init {
         observeData()
+    }
+
+    fun setTransition(
+        sharedTransitionScope: SharedTransitionScope,
+        animatedVisibilityScope: AnimatedVisibilityScope
+    ) {
+        _uiState.update {
+            it.copy(
+                sharedTransitionScope = sharedTransitionScope,
+                animatedVisibilityScope = animatedVisibilityScope
+            )
+        }
     }
 
     private fun observeData() {

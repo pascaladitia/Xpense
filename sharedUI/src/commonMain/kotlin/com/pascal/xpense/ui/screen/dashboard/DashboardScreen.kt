@@ -97,25 +97,32 @@ fun DashboardScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item(key = "topbar") {
-                    StaggeredAnimatedItem(index = 0) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(52.dp),
-                                painter = painterResource(Res.drawable.logo),
-                                contentDescription = null
-                            )
-
-                            Spacer(Modifier.width(16.dp))
-
-                            Text(
-                                text = stringResource(Res.string.app_name).uppercase(),
-                                style = MaterialTheme.typography.titleLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        uiState.sharedTransitionScope?.let {
+                            with(it) {
+                                Icon(
+                                    modifier = Modifier
+                                        .size(52.dp)
+                                        .sharedElement(
+                                            sharedContentState = rememberSharedContentState(Res.string.app_name),
+                                            animatedVisibilityScope = uiState.animatedVisibilityScope!!
+                                        ),
+                                    painter = painterResource(Res.drawable.logo),
+                                    contentDescription = null
+                                )
+                            }
                         }
 
+                        Spacer(Modifier.width(16.dp))
+
+                        Text(
+                            text = stringResource(Res.string.app_name).uppercase(),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
 
