@@ -11,9 +11,9 @@ object Constant {
     const val W185 = "w185"
     const val W500 = "w500"
 
-    // Dahl AI Chat
-    const val AI_BASE_URL = "https://inference.dahl.global/v1/chat/completions"
-    const val AI_MODEL = "MiniMaxAI/MiniMax-M2.7"
+    // Groq AI Chat (OpenAI-compatible). Free high-limit model.
+    const val AI_BASE_URL = "https://api.groq.com/openai/v1/chat/completions"
+    const val AI_MODEL = "llama-3.3-70b-versatile"
 
     val EXPENSE_CATEGORIES = listOf("Food", "Transport", "Shopping", "Other")
     val INCOME_CATEGORIES = listOf("Salary", "Freelance", "Investment", "Other")

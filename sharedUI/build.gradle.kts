@@ -151,13 +151,13 @@ val localProperties = Properties().apply {
     val localFile = File(rootDir, "local.properties")
     if (localFile.exists()) load(localFile.inputStream())
 }
-val bynaraApiKey = localProperties.getProperty("BYNARA_API_KEY") ?: ""
+val aiApiKey = localProperties.getProperty("AI_API_KEY") ?: ""
 
 buildkonfig {
     packageName = "com.pascal.xpense"
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://www.url.com")
-        buildConfigField(FieldSpec.Type.STRING, "BYNARA_API_KEY", bynaraApiKey)
+        buildConfigField(FieldSpec.Type.STRING, "AI_API_KEY", aiApiKey)
     }
 }
 

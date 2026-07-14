@@ -1,83 +1,27 @@
 package com.pascal.xpense.data.remote.api
 
 import com.pascal.xpense.BuildKonfig
+import com.pascal.xpense.data.remote.client.client
+import com.pascal.xpense.data.remote.dtos.ChatResponse
+import com.pascal.xpense.data.remote.dtos.ChatTurn
+import com.pascal.xpense.data.remote.mapper.toChatRequest
 import com.pascal.xpense.utils.Constant
-import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.buildJsonArray
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
-import kotlinx.serialization.json.putJsonArray
-import kotlinx.serialization.json.putJsonObject
 
 class AIService {
 
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                }
-            )
-        }
-    }
-
-    private val endpoint = Constant.AI_BASE_URL
-    private val apiKey = BuildKonfig.BYNARA_API_KEY
-    private val model = Constant.AI_MODEL
-
     suspend fun chat(messages: List<ChatTurn>): String {
-        val body = buildJsonObject {
-            put("model", model)
-            putJsonArray("messages") {
-                messages.forEach { turn ->
-                    add(
-                        buildJsonObject {
-                            put("role", turn.role)
-                            if (turn.imageDataUrl != null) {
-                                putJsonArray("content") {
-                                    add(
-                                        buildJsonObject {
-                                            put("type", "text")
-                                            put("text", turn.text.ifBlank { "Look at this image and describe it." })
-                                        }
-                                    )
-                                    add(
-                                        buildJsonObject {
-                                            put("type", "image_url")
-                                            putJsonObject("image_url") {
-                                                put("url", turn.imageDataUrl)
-                                            }
-                                        }
-                                    )
-                                }
-                            } else {
-                                put("content", turn.text)
-                            }
-                        }
-                    )
-                }
-            }
-        }.toString()
-
+        val request = messages.toChatRequest(Constant.AI_MODEL)
         return try {
-            val response: HttpResponse = client.post(endpoint) {
-                contentType(ContentType.Application.Json)
-                header("Authorization", "Bearer $apiKey")
-                setBody(body)
+            val response: HttpResponse = client.post(Constant.AI_BASE_URL) {
+                header("Authorization", "Bearer ${BuildKonfig.AI_API_KEY}")
+                setBody(request)
             }
             response.body<ChatResponse>().let { body ->
                 if (body.error != null) {
@@ -94,26 +38,3 @@ class AIService {
         }
     }
 }
-
-@Serializable
-data class ChatResponse(
-    val choices: List<ChatChoice> = emptyList(),
-    val error: ApiError? = null
-)
-
-@Serializable
-data class ChatChoice(
-    val message: ApiMessage = ApiMessage(),
-    val finish_reason: String? = null
-)
-
-@Serializable
-data class ApiMessage(
-    val role: String = "",
-    val content: String = ""
-)
-
-@Serializable
-data class ApiError(
-    val message: String? = null
-)

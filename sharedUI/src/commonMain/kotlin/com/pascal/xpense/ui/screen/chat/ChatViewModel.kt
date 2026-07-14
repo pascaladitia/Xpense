@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.pascal.xpense.data.local.entity.TransactionEntity
 import com.pascal.xpense.data.remote.api.AIService
 import com.pascal.xpense.data.remote.api.ChatPrompt
-import com.pascal.xpense.data.remote.api.ChatTurn
-import com.pascal.xpense.data.remote.api.normalizeCategory
-import com.pascal.xpense.data.remote.api.normalizeTransactionType
-import com.pascal.xpense.data.remote.api.parseAITransaction
+import com.pascal.xpense.data.remote.dtos.ChatTurn
+import com.pascal.xpense.data.remote.mapper.normalizeCategory
+import com.pascal.xpense.data.remote.mapper.normalizeTransactionType
+import com.pascal.xpense.data.remote.mapper.parseAITransaction
 import com.pascal.xpense.domain.usecase.local.LocalUseCase
 import com.pascal.xpense.ui.screen.chat.state.ChatMessage
 import com.pascal.xpense.ui.screen.chat.state.ChatUIState
