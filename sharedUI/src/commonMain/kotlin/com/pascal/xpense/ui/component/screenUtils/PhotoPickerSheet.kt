@@ -25,20 +25,12 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.pascal.xpense.utils.rememberCameraCapture
-import com.pascal.xpense.utils.rememberImagePicker
-import dev.icerock.moko.permissions.Permission
-import dev.icerock.moko.permissions.camera.CAMERA
-import dev.icerock.moko.permissions.compose.BindEffect
-import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import xpense.sharedui.generated.resources.Res
 import xpense.sharedui.generated.resources.add_photo
@@ -51,33 +43,11 @@ import xpense.sharedui.generated.resources.take_photo_desc
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoPickerSheet(
-    onPhotoSelected: (ByteArray?, String) -> Unit,
+    onCameraClick: () -> Unit,
+    onGalleryClick: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val coroutineScope = rememberCoroutineScope()
-    val permissionsController = rememberPermissionsControllerFactory().createPermissionsController()
-    BindEffect(permissionsController)
-
-    val cameraCapture = rememberCameraCapture { bytes, name ->
-        onPhotoSelected(bytes, name)
-        onDismiss()
-    }
-    val imagePicker = rememberImagePicker { bytes, name ->
-        onPhotoSelected(bytes, name)
-        onDismiss()
-    }
-
-    fun launchCamera() {
-        coroutineScope.launch {
-            try {
-                permissionsController.providePermission(Permission.CAMERA)
-                cameraCapture.launch()
-            } catch (_: Exception) {
-                // Camera permission denied or unavailable: keep the sheet open
-            }
-        }
-    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -103,14 +73,14 @@ fun PhotoPickerSheet(
                 icon = Icons.Default.CameraAlt,
                 label = stringResource(Res.string.take_photo),
                 description = stringResource(Res.string.take_photo_desc),
-                onClick = { launchCamera() },
+                onClick = onCameraClick,
             )
 
             PhotoPickerOption(
                 icon = Icons.Default.Photo,
                 label = stringResource(Res.string.choose_from_gallery),
                 description = stringResource(Res.string.choose_from_gallery_desc),
-                onClick = { imagePicker.launch() },
+                onClick = onGalleryClick,
             )
 
             Spacer(Modifier.height(8.dp))

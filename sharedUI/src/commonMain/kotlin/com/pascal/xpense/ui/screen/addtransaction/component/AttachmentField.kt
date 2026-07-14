@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -72,18 +74,18 @@ fun AttachmentField(
                             .size(80.dp)
                             .clip(RoundedCornerShape(8.dp))
                     )
-                    IconButton(
-                        onClick = onClear,
+                    Box(
                         modifier = Modifier
-                            .size(20.dp)
+                            .padding(4.dp)
                             .align(Alignment.TopEnd)
                             .background(Color.Black.copy(alpha = 0.6f), CircleShape)
+                            .clickable { onClear() }
                     ) {
                         Icon(
+                            modifier = Modifier.size(14.dp),
                             imageVector = Icons.Default.Close,
                             contentDescription = stringResource(Res.string.remove_image_desc),
-                            tint = Color.White,
-                            modifier = Modifier.size(12.dp)
+                            tint = Color.White
                         )
                     }
                 }

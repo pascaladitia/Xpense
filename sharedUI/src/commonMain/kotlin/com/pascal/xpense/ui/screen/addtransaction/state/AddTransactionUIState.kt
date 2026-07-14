@@ -2,7 +2,7 @@ package com.pascal.xpense.ui.screen.addtransaction.state
 
 data class AddTransactionUIState(
     val title: String = "",
-    val amount: String = "",
+    val amount: String = "0",
     val date: String = "",
     val type: String = "EXPENSE",
     val category: String = "Food",

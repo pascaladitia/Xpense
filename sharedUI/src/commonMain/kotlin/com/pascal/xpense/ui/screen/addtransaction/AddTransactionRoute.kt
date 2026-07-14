@@ -2,17 +2,24 @@ package com.pascal.xpense.ui.screen.addtransaction
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pascal.xpense.ui.component.screenUtils.DatePickerComponent
 import com.pascal.xpense.ui.component.screenUtils.PhotoPickerSheet
 import com.pascal.xpense.ui.screen.addtransaction.state.AddTransactionEvent
 import com.pascal.xpense.ui.screen.addtransaction.state.LocalAddTransactionEvent
+import com.pascal.xpense.utils.rememberCameraCapture
+import com.pascal.xpense.utils.rememberImagePicker
 import com.pascal.xpense.utils.saveImageBytesToFile
+import dev.icerock.moko.permissions.Permission
+import dev.icerock.moko.permissions.camera.CAMERA
+import dev.icerock.moko.permissions.compose.BindEffect
+import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -23,6 +30,20 @@ fun AddTransactionRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showDatePicker by remember { mutableStateOf(false) }
     var showPhotoPicker by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+    val permissionsController = rememberPermissionsControllerFactory().createPermissionsController()
+    BindEffect(permissionsController)
+
+    val cameraCapture = rememberCameraCapture { bytes, name ->
+        val path = if (bytes != null) saveImageBytesToFile(bytes, name) else null
+        viewModel.setAttachment(path, bytes)
+        showPhotoPicker = false
+    }
+    val imagePicker = rememberImagePicker { bytes, name ->
+        val path = if (bytes != null) saveImageBytesToFile(bytes, name) else null
+        viewModel.setAttachment(path, bytes)
+        showPhotoPicker = false
+    }
 
     val event = remember(showDatePicker, showPhotoPicker) {
         AddTransactionEvent(
@@ -59,10 +80,15 @@ fun AddTransactionRoute(
 
     if (showPhotoPicker) {
         PhotoPickerSheet(
-            onPhotoSelected = { bytes, name ->
-                val path = if (bytes != null) saveImageBytesToFile(bytes, name) else null
-                viewModel.setAttachment(path, bytes)
+            onCameraClick = {
+                coroutineScope.launch {
+                    try {
+                        permissionsController.providePermission(Permission.CAMERA)
+                        cameraCapture.launch()
+                    } catch (_: Exception) { }
+                }
             },
+            onGalleryClick = { imagePicker.launch() },
             onDismiss = { showPhotoPicker = false }
         )
     }

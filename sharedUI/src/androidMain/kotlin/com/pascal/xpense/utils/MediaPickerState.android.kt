@@ -16,6 +16,7 @@ actual fun rememberCameraCapture(
     onResult: (ByteArray?, String) -> Unit,
 ): CameraCaptureState {
     val context = LocalContext.current
+    val currentOnResult = rememberUpdatedState(onResult)
 
     val tempUriState = remember { mutableStateOf<Uri?>(null) }
 
@@ -25,17 +26,30 @@ actual fun rememberCameraCapture(
         if (success) {
             val uri   = tempUriState.value
             val bytes = uri?.let {
-                context.contentResolver.openInputStream(it)?.use { s -> s.readBytes() }
+                try {
+                    val name = "photo_${System.currentTimeMillis()}.jpg"
+                    val tempFile = File(context.cacheDir, name)
+                    context.contentResolver.openInputStream(it)?.use { input ->
+                        tempFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                    val data = if (tempFile.exists()) tempFile.readBytes() else null
+                    tempFile.delete()
+                    data
+                } catch (_: Exception) {
+                    null
+                }
             }
             val name  = "photo_${System.currentTimeMillis()}.jpg"
-            onResult(bytes, name)
+            currentOnResult.value(bytes, name)
         } else {
-            onResult(null, "")
+            currentOnResult.value(null, "")
         }
         tempUriState.value = null
     }
 
-    return remember {
+    return remember(launcher) {
         object : CameraCaptureState {
             override fun launch() {
                 val file = createTempImageFile(context)
@@ -56,23 +70,34 @@ actual fun rememberImagePicker(
     onResult: (ByteArray?, String) -> Unit,
 ): ImagePickerState {
     val context = LocalContext.current
+    val currentOnResult = rememberUpdatedState(onResult)
 
     val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
+        ActivityResultContracts.OpenDocument()
+    ) { uri: Uri? ->
         if (uri != null) {
-            val bytes = context.contentResolver
-                .openInputStream(uri)?.use { it.readBytes() }
-            val name  = uri.lastPathSegment ?: "image_${System.currentTimeMillis()}.jpg"
-            onResult(bytes, name)
+            try {
+                val name = "gallery_${System.currentTimeMillis()}.jpg"
+                val tempFile = File(context.cacheDir, name)
+                context.contentResolver.openInputStream(uri)?.use { input ->
+                    tempFile.outputStream().use { output ->
+                        input.copyTo(output)
+                    }
+                }
+                val bytes = if (tempFile.exists()) tempFile.readBytes() else null
+                tempFile.delete()
+                currentOnResult.value(bytes, name)
+            } catch (_: Exception) {
+                currentOnResult.value(null, "")
+            }
         } else {
-            onResult(null, "")
+            currentOnResult.value(null, "")
         }
     }
 
-    return remember {
+    return remember(launcher) {
         object : ImagePickerState {
-            override fun launch() = launcher.launch("image/*")
+            override fun launch() = launcher.launch(arrayOf("image/*"))
         }
     }
 }
