@@ -21,7 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.pascal.xpense.ui.screen.addtransaction.AddTransactionRoute
 import com.pascal.xpense.ui.screen.analytics.AnalyticsRoute
-import com.pascal.xpense.ui.screen.budget.BudgetRoute
+import com.pascal.xpense.ui.screen.chat.ChatRoute
 import com.pascal.xpense.ui.screen.dashboard.DashboardRoute
 import com.pascal.xpense.ui.screen.profile.ProfileRoute
 
@@ -35,7 +35,7 @@ fun RouteScreen(
     val bottomNavRoutes = listOf(
         Screen.DashboardScreen.route,
         Screen.AnalyticsScreen.route,
-        Screen.BudgetScreen.route,
+        Screen.ChatScreen.route,
         Screen.ProfileScreen.route
     )
 
@@ -69,8 +69,8 @@ fun RouteScreen(
                 composable(route = Screen.AnalyticsScreen.route) {
                     AnalyticsRoute()
                 }
-                composable(route = Screen.BudgetScreen.route) {
-                    BudgetRoute()
+                composable(route = Screen.ChatScreen.route) {
+                    ChatRoute()
                 }
                 composable(route = Screen.ProfileScreen.route) {
                     ProfileRoute(onBookMark = {})

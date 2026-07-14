@@ -3,6 +3,7 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -146,10 +147,17 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 }
 
+val localProperties = Properties().apply {
+    val localFile = File(rootDir, "local.properties")
+    if (localFile.exists()) load(localFile.inputStream())
+}
+val bynaraApiKey = localProperties.getProperty("BYNARA_API_KEY") ?: ""
+
 buildkonfig {
     packageName = "com.pascal.xpense"
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://www.url.com")
+        buildConfigField(FieldSpec.Type.STRING, "BYNARA_API_KEY", bynaraApiKey)
     }
 }
 

@@ -10,4 +10,11 @@ object Constant {
     const val YOUTUBE_TRAILERS_URL = "https://www.youtube.com/watch?v="
     const val W185 = "w185"
     const val W500 = "w500"
+
+    // Dahl AI Chat
+    const val AI_BASE_URL = "https://inference.dahl.global/v1/chat/completions"
+    const val AI_MODEL = "MiniMaxAI/MiniMax-M2.7"
+
+    val EXPENSE_CATEGORIES = listOf("Food", "Transport", "Shopping", "Other")
+    val INCOME_CATEGORIES = listOf("Salary", "Freelance", "Investment", "Other")
 }

@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +34,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.utils.rememberCameraCapture
 import com.pascal.xpense.utils.rememberImagePicker
+import dev.icerock.moko.permissions.Permission
+import dev.icerock.moko.permissions.camera.CAMERA
+import dev.icerock.moko.permissions.compose.BindEffect
+import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,6 +47,9 @@ fun PhotoPickerSheet(
     onDismiss: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val coroutineScope = rememberCoroutineScope()
+    val permissionsController = rememberPermissionsControllerFactory().createPermissionsController()
+    BindEffect(permissionsController)
 
     val cameraCapture = rememberCameraCapture { bytes, name ->
         onPhotoSelected(bytes, name)
@@ -49,6 +58,17 @@ fun PhotoPickerSheet(
     val imagePicker = rememberImagePicker { bytes, name ->
         onPhotoSelected(bytes, name)
         onDismiss()
+    }
+
+    fun launchCamera() {
+        coroutineScope.launch {
+            try {
+                permissionsController.providePermission(Permission.CAMERA)
+                cameraCapture.launch()
+            } catch (_: Exception) {
+                // Camera permission denied or unavailable: keep the sheet open
+            }
+        }
     }
 
     ModalBottomSheet(
@@ -75,7 +95,7 @@ fun PhotoPickerSheet(
                 icon = Icons.Default.CameraAlt,
                 label = "Take Photo",
                 description = "Use camera to capture a new photo",
-                onClick = { cameraCapture.launch() },
+                onClick = { launchCamera() },
             )
 
             PhotoPickerOption(

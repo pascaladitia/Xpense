@@ -9,5 +9,5 @@ import androidx.compose.runtime.Composable
 fun SplashScreen(
     animatedVisibilityScope: AnimatedVisibilityScope
 ) {
-   
+
 }

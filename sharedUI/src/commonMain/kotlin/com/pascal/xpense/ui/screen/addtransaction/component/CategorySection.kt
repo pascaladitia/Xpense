@@ -15,12 +15,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.AccountBalance
-import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.Computer
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,14 +44,14 @@ fun CategorySection(
             "Food" to Icons.Default.Restaurant,
             "Transport" to Icons.Default.DirectionsCar,
             "Shopping" to Icons.Default.ShoppingCart,
-            "Bills" to Icons.Default.Receipt
+            "Other" to Icons.Outlined.Category
         )
     } else {
         listOf(
             "Salary" to Icons.Default.AccountBalance,
             "Freelance" to Icons.Default.Computer,
             "Investment" to Icons.AutoMirrored.Filled.TrendingUp,
-            "Gift" to Icons.Default.CardGiftcard
+            "Other" to Icons.Outlined.Category
         )
     }
 

@@ -8,7 +8,8 @@ import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
+import androidx.compose.material.icons.outlined.Category
 import androidx.compose.ui.graphics.vector.ImageVector
 
 expect fun showToast(msg: String)
@@ -85,8 +86,9 @@ fun getCategoryIcon(category: String): ImageVector {
         "bills" -> Icons.Filled.Receipt
         "salary" -> Icons.Filled.AccountBalance
         "freelance" -> Icons.Filled.Computer
-        "investment" -> Icons.Filled.TrendingUp
+        "investment" -> Icons.AutoMirrored.Filled.TrendingUp
         "gift" -> Icons.Filled.CardGiftcard
+        "other" -> Icons.Outlined.Category
         else -> Icons.Filled.Receipt
     }
 }

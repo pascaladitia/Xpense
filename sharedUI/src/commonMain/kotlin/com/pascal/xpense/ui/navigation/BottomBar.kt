@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.AccountBalanceWallet
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.AccountBalanceWallet
+import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -56,10 +58,10 @@ fun BottomBar(
                     screen = Screen.AnalyticsScreen
                 ),
                 NavigationItem(
-                    title = "Budget",
-                    iconFilled = Icons.Filled.AccountBalanceWallet,
-                    iconOutlined = Icons.Outlined.AccountBalanceWallet,
-                    screen = Screen.BudgetScreen
+                    title = "AI",
+                    iconFilled = Icons.Filled.Chat,
+                    iconOutlined = Icons.Outlined.Chat,
+                    screen = Screen.ChatScreen
                 ),
                 NavigationItem(
                     title = "Profile",

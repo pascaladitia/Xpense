@@ -5,13 +5,13 @@ import com.pascal.xpense.data.local.database.AppDatabase
 import com.pascal.xpense.data.local.database.getRoomDatabase
 import com.pascal.xpense.data.local.repository.LocalRepository
 import com.pascal.xpense.data.local.repository.LocalRepositoryImpl
-import com.pascal.xpense.data.remote.api.TransactionAI
+import com.pascal.xpense.data.remote.api.AIService
 import com.pascal.xpense.domain.usecase.local.LocalUseCase
 import com.pascal.xpense.domain.usecase.local.LocalUseCaseImpl
 import com.pascal.xpense.getDatabaseBuilder
 import com.pascal.xpense.ui.screen.addtransaction.AddTransactionViewModel
 import com.pascal.xpense.ui.screen.analytics.AnalyticsViewModel
-import com.pascal.xpense.ui.screen.budget.BudgetViewModel
+import com.pascal.xpense.ui.screen.chat.ChatViewModel
 import com.pascal.xpense.ui.screen.dashboard.DashboardViewModel
 import com.pascal.xpense.ui.screen.profile.ProfileViewModel
 import org.koin.core.module.dsl.bind
@@ -27,7 +27,7 @@ val appModule = module {
     singleOf(::LocalRepositoryImpl) { bind<LocalRepository>() }
 
     // AI
-    singleOf(::TransactionAI)
+    singleOf(::AIService)
 
     // UseCases
     singleOf(::LocalUseCaseImpl) { bind<LocalUseCase>() }
@@ -36,6 +36,6 @@ val appModule = module {
     singleOf(::DashboardViewModel)
     singleOf(::AddTransactionViewModel)
     singleOf(::AnalyticsViewModel)
-    singleOf(::BudgetViewModel)
+    singleOf(::ChatViewModel)
     singleOf(::ProfileViewModel)
 }
