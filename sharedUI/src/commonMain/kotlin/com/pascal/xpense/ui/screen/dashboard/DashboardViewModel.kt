@@ -22,6 +22,8 @@ class DashboardViewModel(
     private val _uiState = MutableStateFlow(DashboardUIState())
     val uiState: StateFlow<DashboardUIState> = _uiState.asStateFlow()
 
+    private var allTransactions: List<TransactionEntity> = emptyList()
+
     init {
         observeData()
     }
@@ -48,6 +50,7 @@ class DashboardViewModel(
                 localUseCase.observeTotalExpense()
             ) { transactions, income, expense ->
                 val balance = income - expense
+                allTransactions = transactions
                 DashboardUIState(
                     isLoading = false,
                     totalBalance = balance,
@@ -70,6 +73,27 @@ class DashboardViewModel(
         viewModelScope.launch {
             val current = _uiState.value.transactions.find { it.id == id } ?: return@launch
             localUseCase.deleteTransaction(current)
+        }
+    }
+
+    fun searchTransaction(query: String) {
+        val filtered = if (query.isBlank()) {
+            allTransactions
+        } else {
+            val normalized = query.trim().lowercase()
+            allTransactions.filter { t ->
+                t.title.lowercase().contains(normalized) ||
+                t.category.lowercase().contains(normalized) ||
+                t.type.lowercase().contains(normalized) ||
+                t.amount.toString().contains(normalized) ||
+                t.date.lowercase().contains(normalized)
+            }
+        }
+        _uiState.update {
+            it.copy(
+                transactions = filtered,
+                groupedTransactions = filtered.groupBy { it.date }
+            )
         }
     }
 

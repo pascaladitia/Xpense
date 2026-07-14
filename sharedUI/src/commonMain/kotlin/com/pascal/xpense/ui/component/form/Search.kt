@@ -48,7 +48,7 @@ fun Search(
 
     BasicTextField(
         modifier = modifier
-            .heightIn(min = 40.dp)
+            .heightIn(min = 52.dp)
             .border(1.dp, border, RoundedCornerShape(8.dp))
             .background(Color.White, RoundedCornerShape(8.dp)),
 
@@ -90,7 +90,7 @@ fun Search(
                     Box {
                         if (searchText.isEmpty()) {
                             Text(
-                                text = "Cari Tugas Disini",
+                                text = "Search Transaction...",
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.onSurface
                                 )

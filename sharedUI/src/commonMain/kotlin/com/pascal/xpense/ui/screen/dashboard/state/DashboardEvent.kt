@@ -8,5 +8,6 @@ val LocalDashboardEvent = compositionLocalOf { DashboardEvent() }
 @Stable
 data class DashboardEvent(
     val onAddTransaction: () -> Unit = {},
-    val onDeleteTransaction: (Long) -> Unit = {}
+    val onDeleteTransaction: (Long) -> Unit = {},
+    val onSearchTransaction: (String) -> Unit = {}
 )

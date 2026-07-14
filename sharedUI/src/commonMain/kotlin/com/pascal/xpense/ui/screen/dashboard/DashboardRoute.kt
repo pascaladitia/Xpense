@@ -27,7 +27,8 @@ fun DashboardRoute(
     CompositionLocalProvider(
         LocalDashboardEvent provides event.copy(
             onAddTransaction = onAddTransaction,
-            onDeleteTransaction = { viewModel.deleteTransaction(it) }
+            onDeleteTransaction = viewModel::deleteTransaction,
+            onSearchTransaction = viewModel::searchTransaction
         )
     ) {
         DashboardScreen(uiState = uiState)

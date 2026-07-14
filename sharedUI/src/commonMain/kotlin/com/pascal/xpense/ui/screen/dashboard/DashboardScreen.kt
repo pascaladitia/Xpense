@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.pascal.xpense.ui.component.form.Search
 import com.pascal.xpense.ui.component.screenUtils.StaggeredAnimatedItem
 import com.pascal.xpense.ui.component.screenUtils.StaggeredScope
 import com.pascal.xpense.ui.component.screenUtils.TopAppBarComponent
@@ -127,13 +128,13 @@ fun DashboardScreen(
                 }
 
                 item(key = "balance") {
-                    StaggeredAnimatedItem(index = 1) {
+                    StaggeredAnimatedItem(index = 0) {
                         BalanceSection(totalBalance = uiState.totalBalance)
                     }
                 }
 
                 item(key = "incomeExpense") {
-                    StaggeredAnimatedItem(index = 2) {
+                    StaggeredAnimatedItem(index = 1) {
                         IncomeExpenseRow(
                             income = uiState.totalIncome,
                             expense = uiState.totalExpense
@@ -142,12 +143,18 @@ fun DashboardScreen(
                 }
 
                 item(key = "transactionsTitle") {
-                    StaggeredAnimatedItem(index = 3) {
+                    StaggeredAnimatedItem(index = 2) {
                         Text(
                             text = "Transactions",
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onBackground
                         )
+                    }
+                }
+
+                item(key = "Search Bar") {
+                    StaggeredAnimatedItem(index = 3) {
+                        Search { event.onSearchTransaction(it) }
                     }
                 }
 

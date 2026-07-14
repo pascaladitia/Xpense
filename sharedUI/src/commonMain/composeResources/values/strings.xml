@@ -48,4 +48,5 @@
     <string name="save">Save</string>
     <string name="set_budget">Set Budget</string>
     <string name="budget_limit">Budget Limit</string>
+    <string name="search_transaction">Search Transaction...</string>
 </resources>
