@@ -13,6 +13,7 @@ import com.pascal.xpense.ui.screen.chat.state.ChatEvent
 import com.pascal.xpense.ui.screen.chat.state.LocalChatEvent
 import com.pascal.xpense.utils.rememberCameraCapture
 import com.pascal.xpense.utils.rememberImagePicker
+import com.pascal.xpense.utils.showToast
 import dev.icerock.moko.permissions.Permission
 import dev.icerock.moko.permissions.camera.CAMERA
 import dev.icerock.moko.permissions.compose.BindEffect
@@ -43,7 +44,10 @@ fun ChatRoute(
         ChatEvent(
             onInputChange = { viewModel.updateInput(it) },
             onSend = { viewModel.send() },
-            onAttachClick = { showPhotoPicker = true },
+            onAttachClick = {
+                showToast("this feature coming soon..")
+                // showPhotoPicker = true
+            },
             onImagePicked = { bytes, name ->
                 if (bytes != null) viewModel.setImage(bytes, name)
             },

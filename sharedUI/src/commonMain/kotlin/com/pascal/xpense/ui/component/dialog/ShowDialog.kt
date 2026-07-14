@@ -29,7 +29,7 @@ import com.pascal.xpense.ui.component.form.FormPasswordComponent
 import com.pascal.xpense.ui.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 import xpense.sharedui.generated.resources.Res
-import xpense.sharedui.generated.resources.masukan_pin
+import xpense.sharedui.generated.resources.input_pin
 import xpense.sharedui.generated.resources.pin
 import xpense.sharedui.generated.resources.tutup
 
@@ -152,7 +152,7 @@ fun ShowFormDialog(
         ) {
             FormPasswordComponent(
                 title = stringResource(Res.string.pin),
-                hintText = stringResource(Res.string.masukan_pin),
+                hintText = stringResource(Res.string.input_pin),
                 value = text,
                 isShowTitle = true,
                 onValueChange = {
