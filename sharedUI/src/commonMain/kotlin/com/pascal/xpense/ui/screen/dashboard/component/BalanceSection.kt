@@ -15,6 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.CoralExpense
 import com.pascal.xpense.ui.theme.GreenIncome
 import com.pascal.xpense.utils.formatAmount
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.total_balance
 
 @Composable
 fun BalanceSection(
@@ -29,7 +32,7 @@ fun BalanceSection(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Total Balance",
+            text = stringResource(Res.string.total_balance).uppercase(),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

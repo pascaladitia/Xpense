@@ -2,10 +2,14 @@ package com.pascal.xpense.ui.screen.dashboard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -39,6 +43,11 @@ import com.pascal.xpense.ui.theme.AppTheme
 import com.pascal.xpense.ui.theme.DeepNavy
 import com.pascal.xpense.utils.formatDateHeader
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import xpense.sharedui.generated.resources.Res
+import xpense.sharedui.generated.resources.app_name
+import xpense.sharedui.generated.resources.logo
 
 @Composable
 fun DashboardScreen(
@@ -77,7 +86,9 @@ fun DashboardScreen(
         totalItems = totalItems,
     ) {
         Box(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
+                .statusBarsPadding()
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -87,10 +98,24 @@ fun DashboardScreen(
             ) {
                 item(key = "topbar") {
                     StaggeredAnimatedItem(index = 0) {
-                        TopAppBarComponent(
-                            title = "ExpenseTracker",
-                            color = DeepNavy
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(52.dp),
+                                painter = painterResource(Res.drawable.logo),
+                                contentDescription = null
+                            )
+
+                            Spacer(Modifier.width(16.dp))
+
+                            Text(
+                                text = stringResource(Res.string.app_name).uppercase(),
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+
                     }
                 }
 

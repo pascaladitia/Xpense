@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import com.pascal.xpense.ui.theme.CoralExpense
 import com.pascal.xpense.ui.theme.GreenIncome
@@ -44,7 +45,7 @@ fun IncomeExpenseRow(
     expense: Double
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         IncomeExpenseCard(
             modifier = Modifier.weight(1f),
@@ -85,8 +86,7 @@ private fun IncomeExpenseCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -110,18 +110,17 @@ private fun IncomeExpenseCard(
                 Spacer(Modifier.width(8.dp))
 
                 Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = label.uppercase(),
+                    style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = "$type$${formatAmount(value)}",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineSmall,
                 color = color
             )
         }

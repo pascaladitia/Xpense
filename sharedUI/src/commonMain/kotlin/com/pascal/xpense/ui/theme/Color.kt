@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 val DeepNavy = Color(0xFF0F172A)
 val SoftGray = Color(0xFFECEEF0)
 val PureWhite = Color(0xFFFFFFFF)
-val LightOutline = Color(0xFFE2E8F0)
+val LightOutline = Color(0xFF969494)
 
 val GreenIncome = Color(0xFF22C55E)
 val CoralExpense = Color(0xFFEF4444)
