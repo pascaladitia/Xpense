@@ -70,7 +70,7 @@ fun DatePickerComponent(
     show: Boolean,
     onDismiss: () -> Unit,
     onConfirm: (String, String?) -> Unit,
-    backDate: Boolean = false,
+    backDate: Boolean = true,
     isRange: Boolean = false,
     maxDate: Int = 0
 ) {

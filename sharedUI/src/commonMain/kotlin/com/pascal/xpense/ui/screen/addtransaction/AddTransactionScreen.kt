@@ -46,7 +46,6 @@ fun AddTransactionScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .systemBarsPadding()
     ) {
         TopAppBarComponent(
             leftIcon1 = Icons.AutoMirrored.Filled.ArrowBack,
