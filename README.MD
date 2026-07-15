@@ -4,7 +4,13 @@
 
 ## Demo
 
-[▶️ Watch Demo Video](demo/demo.mp4)
+<p align="center">
+  <img src="demo/demo.gif" width="1000" alt="Xpense Demo">
+</p>
+
+<p align="center">
+  <em>Demo preview of Xpense on Android</em>
+</p>
 
 ---
 
