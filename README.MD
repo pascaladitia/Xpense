@@ -2,9 +2,9 @@
 
 **Xpense** is a personal finance tracker built with **Kotlin Multiplatform (KMP)** + **Compose Multiplatform** and powered by **AI** to help you manage your income and expenses smarter.
 
-<video width="700" controls>
-  <source src="https://raw.githubusercontent.com/USERNAME/REPOSITORY/BRANCH/demo/demo.mp4" type="video/mp4">
-</video>
+## Demo
+
+[▶️ Watch Demo Video](demo/demo.mp4)
 
 ---
 
