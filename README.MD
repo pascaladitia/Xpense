@@ -5,7 +5,7 @@
 ## Demo
 
 <p align="center">
-  <img src="demo/demo.gif" width="1000" alt="Xpense Demo">
+  <img src="demo/demo.gif" width="700" alt="Xpense Demo">
 </p>
 
 <p align="center">
