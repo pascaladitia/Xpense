@@ -1,4 +1,4 @@
-# Xpense 💰
+# Xpense
 
 **Xpense** is a personal finance tracker built with **Kotlin Multiplatform (KMP)** + **Compose Multiplatform** and powered by **AI** to help you manage your income and expenses smarter.
 
@@ -8,7 +8,7 @@
 
 ---
 
-## ✨ Features
+## Features
 
 - **Dashboard** — Real-time balance, income, and expense overview
 - **Add Transaction** — Log income/expenses with category, date, and receipt photo
@@ -19,13 +19,13 @@
 
 ---
 
-## 🧠 Why Xpense?
+## Why Xpense?
 
 Xpense leverages **Kotlin Multiplatform** to share 100% of business logic and UI between Android & iOS, and **Groq AI** for a responsive finance assistant that understands natural language. Just say *"I spent $50 on food today"* and the AI logs it.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Tech | Description |
 |---|---|
@@ -56,7 +56,7 @@ Xpense uses **Groq AI API** (OpenAI-compatible) for the finance assistant featur
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Android
 ```bash
@@ -69,7 +69,7 @@ Open `iosApp/iosApp.xcodeproj` in Xcode, select the target, and hit Run.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ├── androidApp/          # Android entry point
@@ -85,6 +85,6 @@ Open `iosApp/iosApp.xcodeproj` in Xcode, select the target, and hit Run.
 
 ---
 
-## 📄 License
+## License
 
 This project is built for learning and development purposes. Feel free to use and modify as needed.
