@@ -1,4 +1,4 @@
-package com.pascal.xpense.data.local.repository
+package com.pascal.xpense.data.repository.local
 
 import com.pascal.xpense.data.local.entity.CategoryTotal
 import com.pascal.xpense.data.local.entity.TransactionEntity
