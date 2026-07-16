@@ -151,7 +151,7 @@ val aiApiKey = localProperties.getProperty("AI_API_KEY") ?: ""
 buildkonfig {
     packageName = "com.pascal.xpense"
     defaultConfigs {
-        buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://www.url.com")
+        buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://api.groq.com/openai/v1/chat/")
         buildConfigField(FieldSpec.Type.STRING, "AI_API_KEY", aiApiKey)
     }
 }

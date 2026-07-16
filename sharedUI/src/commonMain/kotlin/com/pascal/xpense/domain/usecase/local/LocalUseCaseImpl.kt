@@ -1,7 +1,7 @@
 package com.pascal.xpense.domain.usecase.local
 
 import com.pascal.xpense.data.local.entity.TransactionEntity
-import com.pascal.xpense.data.local.repository.LocalRepository
+import com.pascal.xpense.data.repository.local.LocalRepository
 import com.pascal.xpense.domain.model.CategoryBreakdown
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

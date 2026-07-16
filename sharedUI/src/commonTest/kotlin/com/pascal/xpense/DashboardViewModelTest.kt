@@ -2,7 +2,7 @@ package com.pascal.xpense
 
 import com.pascal.xpense.data.local.entity.CategoryTotal
 import com.pascal.xpense.data.local.entity.TransactionEntity
-import com.pascal.xpense.data.local.repository.LocalRepository
+import com.pascal.xpense.data.repository.local.LocalRepository
 import com.pascal.xpense.domain.usecase.local.LocalUseCaseImpl
 import com.pascal.xpense.ui.screen.dashboard.DashboardViewModel
 import kotlinx.coroutines.Dispatchers

@@ -1,13 +1,16 @@
 package com.pascal.xpense.data.remote.client
 
-import co.touchlab.kermit.Logger
+import com.pascal.xpense.BuildKonfig
 import com.pascal.xpense.utils.Constant
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
@@ -25,12 +28,13 @@ val client: HttpClient by lazy {
             )
         }
         install(Logging) {
-            logger = object : io.ktor.client.plugins.logging.Logger {
+            logger = Logger.DEFAULT
+            level = LogLevel.ALL
+            logger = object : Logger {
                 override fun log(message: String) {
-                    Logger.d(tag = "HttpClient") { message }
+                    co.touchlab.kermit.Logger.e("Ktor Logging $message")
                 }
             }
-            level = LogLevel.INFO
         }
         install(HttpTimeout) {
             requestTimeoutMillis = Constant.TIMEOUT
@@ -39,6 +43,7 @@ val client: HttpClient by lazy {
         }
         defaultRequest {
             contentType(ContentType.Application.Json)
+            header("Authorization", "Bearer ${BuildKonfig.AI_API_KEY}")
         }
     }
 }
